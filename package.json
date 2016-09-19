@@ -1,0 +1,24 @@
+{
+  "name": "patrolling",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "adm-zip": "^0.4.7",
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.4.2",
+    "express": "^4.14.0",
+    "express-session": "^1.14.0",
+    "formidable": "^1.0.17",
+    "fs": "0.0.2",
+    "mqtt": "^1.12.0",
+    "multer": "^1.1.0",
+    "mysql": "^2.11.1"
+  }
+}

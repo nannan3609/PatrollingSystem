@@ -1,0 +1,2626 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>新巡查通</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+<!-- 头部导航条 -->
+<div class="mynav">
+    <div class="mynav-title"><span>新巡查通</span></div>
+</div>
+<!-- 左侧导航条 -->
+<div class="content">
+    <div class="navbarLeft">
+        <button class="btn btn-primary" onclick="clickReservoirInfo()">水库概览</button>
+        <button class="btn btn-primary" onclick="clickMap()" id="map_look">地图概览</button>
+        <button class="btn btn-primary" onclick="clickSend()">任务派发</button>
+        <button class="btn btn-primary" onclick="clickSeek()">任务管理</button>
+        <button class="btn btn-primary" onclick="clickReservoirAdd()">水库添加</button>
+        <button class="btn btn-primary" onclick="clickReservoir()">水库管理</button>
+        <button class="btn btn-primary" onclick="clickPeople()">人员管理</button>
+        <button class="btn btn-primary" onclick="clickDevice()">设备管理</button>
+        <button class="btn btn-primary" onclick="clickLog()">登录日志</button>
+    </div>
+    <div class="contentRight">
+        <!-- 水库概览 -->
+        <div class="panel panel-primary" id="ReservoirInfo">
+            <div class="panel-heading">
+                <span>水库概览</span>
+            </div>
+            <div class="panel-body reservoir-body">
+                <div class="row">
+
+                </div>
+            </div>
+        </div>
+        <!-- 地图概览 -->
+        <div class="panel panel-primary" id="map_block">
+            <div class="panel-heading">
+                <span>地图概览</span>
+            </div>
+            <div class="panel-body">
+                <div class="map_view">
+                    <div class="map_left">
+                        <div class="map_head_bar">
+                            <input type="date" class="form-control add-input" id="mapHeadBarDate">
+                            <select class="form-control add-input" id="checker_road">
+                                <!--<option value="">张三</option>-->
+                                <!--<option value="">李四</option>-->
+                                <!--<option value="">王五</option>-->
+                                <!--<option value="">武七</option>-->
+                                <option >请选择巡查人员</option>
+                            </select>
+                            <select class="form-control add-input" id="ctime">
+                            </select>
+                            <button class="btn btn-primary" id="mapReturnBtn">返回</button>
+                            <!--<button class="btn btn-primary">切换</button>-->
+                        </div>
+                        <div class="under_bar">
+                            <div id="map_container">
+                                <!--<button id="sss"></button>-->
+                                <input id="location1" type="button" class="btn btn-warning"
+                                       style="position:absolute;z-index:304;right:120px;top:12px;" onclick="showtime(5)"
+                                       value="一键定位"/>
+                            </div>
+                            <div class="map_info_bottom">
+                                <!-- <div class="map_info_bottom_head"> -->
+                                <img class="map_info_bottom_head_img" src="">
+                                <!-- </div> -->
+                                <table class="table table-bordered bottom-table">
+                                    <tr>
+                                        <td class="map_info_bottom_td">姓名</td>
+                                        <td id="map_checker_name"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>状态</td>
+                                        <td id="map_checker_status"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>日期</td>
+                                        <td id="map_checker_date"></td>
+                                    </tr>
+                                    <!--<tr>-->
+                                    <!--<td>时间</td>-->
+                                    <!--<td id="map_checker_time"></td>-->
+                                    <!--</tr>-->
+                                    <tr>
+                                        <td>当前水库</td>
+                                        <td id="map_checker_reservoir"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="map_info_right">
+                        <table class="table table-bordered map_info_right_table">
+                            <thead>
+                            <tr>
+                                <td style="width:12%">部位</td>
+                                <td style="width:66%">巡视检查内容</td>
+                                <td style="width:10%">检查结果</td>
+                                <td style="width:12%">照片</td>
+                            </tr>
+                            </thead>
+                            <tbody class="map_info_right_all">
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- 巡查审阅 -->
+        <div class="panel panel-primary" id="check">
+            <div class="panel-heading">
+                <span>任务管理</span>
+            </div>
+            <div class="check-search-box">
+                <span>任务编号</span><input type="number" class="form-control" id="mission_id">
+                <span>巡查水库</span><select class="form-control add-input" id="reservoir_search">
+                    <option></option>
+                </select>
+                <span>巡查人员</span><select class="form-control add-input" id="checker_search">
+                    <option></option>
+                </select><br>
+                <span>上传日期</span><input type="date" class="form-control" id="date_search">
+                <span>完成状态</span>
+                <select class="form-control" id="status">
+                    <option>不限</option>
+                    <option>未巡查</option>
+                    <option>巡查中</option>
+                    <option>已巡查</option>
+                </select>
+                <span>异常状态</span>
+                <select class="form-control" id="disable">
+                    <option>不限</option>
+                    <option>无</option>
+                    <option>有</option>
+                </select>
+                <button class="btn btn-primary" onclick="search()">搜索</button>
+            </div>
+            <div class="record-check">
+                <table class="table table-striped send-table" id="record">
+                    <thead class="record-check-thead">
+                    <tr>
+                        <th>任务编号</th>
+                        <th>巡查人员</th>
+                        <th>巡查水库</th>
+                        <th>上传日期</th>
+                        <th>任务状态</th>
+                        <th>有无异常</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="hismission">
+                    <!--<tr>-->
+                    <!--<td>001</td>-->
+                    <!--<td>张三</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>2016-6-12</td>-->
+                    <!--<td>已完成</td>-->
+                    <!--<td>无</td>-->
+                    <!--<td>-->
+                    <!--<button>详情</button>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>002</td>-->
+                    <!--<td>张三</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>2016-6-12</td>-->
+                    <!--<td>已完成</td>-->
+                    <!--<td>无</td>-->
+                    <!--<td>-->
+                    <!--<button>详情</button>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>003</td>-->
+                    <!--<td>张三</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>2016-6-12</td>-->
+                    <!--<td>已完成</td>-->
+                    <!--<td>无</td>-->
+                    <!--<td>-->
+                    <!--<button>详情</button>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>004</td>-->
+                    <!--<td>张三</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>2016-6-12</td>-->
+                    <!--<td>已完成</td>-->
+                    <!--<td>无</td>-->
+                    <!--<td>-->
+                    <!--<button>详情</button>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>005</td>-->
+                    <!--<td>张三</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>2016-6-12</td>-->
+                    <!--<td>已完成</td>-->
+                    <!--<td>无</td>-->
+                    <!--<td>-->
+                    <!--<button>详情</button>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>006</td>-->
+                    <!--<td>张三</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>2016-6-12</td>-->
+                    <!--<td>已完成</td>-->
+                    <!--<td>无</td>-->
+                    <!--<td>-->
+                    <!--<button>详情</button>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>007</td>-->
+                    <!--<td>张三</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>2016-6-12</td>-->
+                    <!--<td>已完成</td>-->
+                    <!--<td>无</td>-->
+                    <!--<td>-->
+                    <!--<button>详情</button>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>008</td>-->
+                    <!--<td>张三</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>2016-6-12</td>-->
+                    <!--<td>已完成</td>-->
+                    <!--<td>无</td>-->
+                    <!--<td>-->
+                    <!--<button>详情</button>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>009</td>-->
+                    <!--<td>张三</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>2016-6-12</td>-->
+                    <!--<td>已完成</td>-->
+                    <!--<td>无</td>-->
+                    <!--<td>-->
+                    <!--<button>详情</button>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    </tbody>
+                </table>
+            </div>
+            <!-- bootstrap翻页 -->
+            <div class="bottom-pagination-div">
+                <nav class="bottom-pagination-nav">
+                    <ul class="pagination">
+                        <!--<li><a onclick="searchPage()">首页</a></li>-->
+                        <!--<li><a href="javascript:void(0)">上一页</a></li>-->
+                        <!--<li><a href="javascript:void(0)">1</a></li>-->
+                        <!--<li><a href="javascript:void(0)">2</a></li>-->
+                        <!--<li><a href="javascript:void(0)">3</a></li>-->
+                        <!--<li><a href="javascript:void(0)">4</a></li>-->
+                        <!--<li><a href="javascript:void(0)">...</a></li>-->
+                        <!--<li><a href="javascript:void(0)">下一页</a></li>-->
+                        <!--<li><a href="javascript:void(0)">尾页</a></li>-->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- 任务派发 -->
+        <div class="panel panel-primary" id="send">
+            <div class="panel-heading">
+                <span>任务派发</span>
+            </div>
+            <div class="panel-body">
+                <div class="panel-left sendLeft1" id="sendLeft1">
+                    <!--<div class="send-num">-->
+                    <!--&lt;!&ndash;<span>任务编号</span>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input type="number" class="form-control add-input" id="num">&ndash;&gt;-->
+                    <!--<span>任务编号</span>-->
+                    <input type="hidden" class="form-control add-input" value="" id="num">
+                    <!--</div>-->
+                    <div class="send-people">
+                        <span>巡检人员</span>
+                        <select class="form-control add-input" id="people">
+                            <!--<option>张三</option>-->
+                            <!--<option>李四</option>-->
+                            <!--<option>王二</option>-->
+                        </select>
+                    </div>
+                    <div class="send-date">
+                        <span>巡检时间</span>
+                        <input type="date" class="form-control add-input" id="day">
+                        <select class="form-control add-input" id="time">
+                            <option>上午</option>
+                            <option>下午</option>
+                        </select>
+                    </div>
+                    <div class="send-reservoir">
+                        <span>巡检水库</span>
+                        <select class="form-control add-input" id="reservoir">
+                            <!--<option>水库一</option>-->
+                            <!--<option>水库二</option>-->
+                            <!--<option>水库三</option>-->
+                        </select>
+                    </div>
+                    <!--<div class="send-item">-->
+                    <!--<span>检查项</span><br>-->
+                    <!--<input class="checkItem" type="checkbox" value="迎水面坝坡">迎水面坝坡&nbsp;&nbsp;&nbsp;-->
+                    <!--<input class="checkItem" type="checkbox" value="溢洪道">溢洪道&nbsp;&nbsp;&nbsp;-->
+                    <!--<input class="checkItem" type="checkbox" value="坝脚">坝脚&nbsp;&nbsp;&nbsp;-->
+                    <!--<input class="checkItem" type="checkbox" value="渗漏">渗漏&nbsp;&nbsp;&nbsp;-->
+                    <!--<input class="checkItem" type="checkbox" value="两岸坝肩区">两岸坝肩区&nbsp;&nbsp;&nbsp;<br>-->
+                    <!--<input class="checkItem" type="checkbox" value="背水面坝坡">背水面坝坡&nbsp;&nbsp;&nbsp;-->
+                    <!--<input class="checkItem" type="checkbox" value="泄洪洞">泄洪洞&nbsp;&nbsp;&nbsp;-->
+                    <!--<input class="checkItem" type="checkbox" value="坝顶">坝顶&nbsp;&nbsp;&nbsp;-->
+                    <!--<input class="checkItem" type="checkbox" value="裂缝">裂缝&nbsp;&nbsp;&nbsp;-->
+                    <!--<input class="checkItem" type="checkbox" value="变形观测">变形观测&nbsp;&nbsp;&nbsp;-->
+                    <!--</div>-->
+                    <div class="send-remark">
+                        <span>任务详情</span>
+                        <br/>
+                        <textarea class="form-control" id="detail"></textarea>
+                    </div>
+                </div>
+                <div class="panel-right sendRight1" id="sendRight1">
+                    <span>检查项</span><br>
+                    <button onclick="selectAll(this.parentNode)" id="selectAll">全选</button>
+                    <div>
+                        <input type="checkbox" class="checkItem" value="1" id="sendItem1"
+                               onclick="sendItem1(this.parentNode)"><span>坝顶</span><br>
+
+                        <div id="send-item-1" class="send-item">
+                            &nbsp;&nbsp;&nbsp;<input class="sub0" type="checkbox" value="1">有无裂缝，异常变形<br>
+                            &nbsp;&nbsp;&nbsp;<input class="sub0" type="checkbox"
+                                                     value="2">防浪墙有无开裂、错断、倾斜、积水、沉陷等情况<br>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="checkbox" class="checkItem" value="2" id="sendItem2"
+                               onclick="sendItem1(this.parentNode)"><span>迎水面坝坡</span><br>
+
+                        <div id="send-item-2" class="send-item">
+                            &nbsp;&nbsp;&nbsp;<input class="sub1" type="checkbox"
+                                                     value="1">护坡（面板）有无裂缝、剥落、滑动、隆起、塌坑、错位<br>
+                            &nbsp;&nbsp;&nbsp;<input class="sub1" type="checkbox" value="2">水有无变形、损坏；迎坝水面有无冒泡、变浑或漩涡等异常现象<br>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="checkbox" class="checkItem" value="3" id="sendItem3"
+                               onclick="sendItem1(this.parentNode)"><span>背水面坝坡</span><br>
+
+                        <div id="send-item-3" class="send-item">
+                            &nbsp;&nbsp;&nbsp;<input class="sub2" type="checkbox"
+                                                     value="1">有无裂缝、滑动、隆起、塌陷、散浸<br>
+                            &nbsp;&nbsp;&nbsp;<input class="sub2" type="checkbox" value="2">有无扩大、涌水、流土<br>
+                            &nbsp;&nbsp;&nbsp;<input class="sub2" type="checkbox" value="3">有无管涌、兽洞<br>
+                            &nbsp;&nbsp;&nbsp;<input class="sub2" type="checkbox" value="4">排水系统是否通畅<br>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="checkbox" class="checkItem" value="4" id="sendItem4"
+                               onclick="sendItem1(this.parentNode)"><span>坝脚</span><br>
+
+                        <div id="send-item-4" class="send-item">
+                            &nbsp;&nbsp;&nbsp;<input class="sub3" type="checkbox"
+                                                     value="1">有无裂缝、推移、涌水、流土、缺损、塌陷、散浸等异常现象<br>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="checkbox" class="checkItem" value="5" id="sendItem5"
+                               onclick="sendItem1(this.parentNode)"><span>两岸坝肩区</span><br>
+
+                        <div id="send-item-5" class="send-item">
+                            &nbsp;&nbsp;&nbsp;<input class="sub4" type="checkbox" value="1">有无裂缝、变形、渗漏、错位、绕渗、溶蚀、管涌、滑坡等情况<br>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="checkbox" value="6" class="checkItem"
+                               onclick="sendItem1(this.parentNode)"><span>溢洪道</span><br>
+
+                        <div id="send-item-6" class="send-item">
+                            &nbsp;&nbsp;&nbsp;<input class="sub5" type="checkbox"
+                                                     value="1">有无堵淤或其他阻水现象，侧墙、底板、伸缩缝<br>
+                            &nbsp;&nbsp;&nbsp;<input class="sub5" type="checkbox" value="2">排水孔是否正常<br>
+                            &nbsp;&nbsp;&nbsp;<input class="sub5" type="checkbox" value="3">消能设施有无损坏<br>
+                            &nbsp;&nbsp;&nbsp;<input class="sub5" type="checkbox" value="4">下游泄水是否通畅<br>
+                            &nbsp;&nbsp;&nbsp;<input class="sub5" type="checkbox" value="5">交通桥有无异常<br>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="checkbox" value="7" class="checkItem"
+                               onclick="sendItem1(this.parentNode)"><span>泄洪洞</span><br>
+
+                        <div id="send-item-7" class="send-item">
+                            &nbsp;&nbsp;&nbsp;<input class="sub6" type="checkbox" value="1">有无堵淤<br>
+                            &nbsp;&nbsp;&nbsp;<input class="sub6" type="checkbox" value="2">侧墙有无渗漏、裂缝<br>
+                            &nbsp;&nbsp;&nbsp;<input class="sub6" type="checkbox" value="3">混凝土是否气蚀、磨损<br>
+                            &nbsp;&nbsp;&nbsp;<input class="sub6" type="checkbox" value="4">排水是否顺畅<br>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="checkbox" value="8" class="checkItem"
+                               onclick="sendItem1(this.parentNode)"><span
+                                id="subkey7">变形观测</span><br>
+
+                        <div id="send-item-8" class="send-item">
+                            &nbsp;&nbsp;&nbsp;<input class="sub7" type="checkbox" value="1">水平位移观测<br>
+                            &nbsp;&nbsp;&nbsp;<input class="sub7" type="checkbox" value="2">垂直位移观测<br>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="checkbox" value="9" class="checkItem"
+                               onclick="sendItem1(this.parentNode)"><span>渗漏</span><br>
+
+                        <div id="send-item-9" class="send-item">
+                            &nbsp;&nbsp;&nbsp;<input class="sub8" type="checkbox" value="1">着重检查渗漏的水量及水质<br>
+                            &nbsp;&nbsp;&nbsp;<input class="sub8" type="checkbox" value="2">渗漏水量的大小是否有变化<br>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="checkbox" value="10" class="checkItem"
+                               onclick="sendItem1(this.parentNode)"><span>裂缝</span><br>
+
+                        <div id="send-item-10" class="send-item">
+                            &nbsp;&nbsp;&nbsp;<input class="sub9" type="checkbox"
+                                                     value="1">裂缝的宽度、长度、深度变化情况<br>
+                        </div>
+                    </div>
+                </div>
+                <div class="send-button">
+                    <button type="submit" class="btn btn-primary" id="submitButton">下发任务</button>
+                </div>
+            </div>
+        </div>
+        <!-- 水库新增 -->
+        <div class="panel panel-primary" id="ReservoirAdd">
+            <div class="panel-heading">
+                <span>水库新增</span>
+            </div>
+            <div class="panel-body">
+                <div class="panel-left sendLeft1" id="ReservoirAddLeft">
+                    <div class="add-block">
+                        <div class="ReservoirAddDiv">
+                            <span>水库名称</span>
+                            <input type="text" class="form-control add-input" value="" id="rrName">
+                        </div>
+                        <div class="ReservoirAddDiv">
+                            <span>所在市</span>
+                            <input type="text" class="form-control add-input" value="" id="rcity">
+                        </div>
+                        <div class="ReservoirAddDiv">
+                            <span>所在县</span>
+                            <input type="text" class="form-control add-input" value="" id="rtown">
+                        </div>
+                        <div class="ReservoirAddDiv">
+                            <span>所在河流</span>
+                            <input type="text" class="form-control add-input" value="" id="rriver">
+                        </div>
+                        <div class="ReservoirAddDiv">
+                            <span>经度</span>
+                            <input type="text" class="form-control add-input" value="" id="rlongitude">
+                        </div>
+                        <div class="ReservoirAddDiv">
+                            <span>纬度</span>
+                            <input type="text" class="form-control add-input" value="" id="rlatitude">
+                        </div>
+                        <div class="ReservoirAddDiv">
+                            <span>水库类型</span>
+                            <select class="form-control add-input" id="rtype">
+                                <option>大型水库</option>
+                                <option>中型水库</option>
+                                <option>小型水库</option>
+                            </select>
+                        </div>
+                        <div class="ReservoirAddDiv">
+                            <span>建设情况</span>
+                            <select class="form-control add-input" id="rsituation">
+                                <option>已建成</option>
+                                <option>建设中</option>
+                                <option>待建设</option>
+                            </select>
+                        </div>
+                        <div class="ReservoirAddDiv">
+                            <span>建成时间</span>
+                            <input type="date" class="form-control add-input" value="" id="rbuild_time">
+                        </div>
+                        <div class="ReservoirAddDiv">
+                            <span>高程系统</span>
+                            <select class="form-control add-input" id="relevation">
+                                <option>大地水准面</option>
+                                <option>似大地水准面</option>
+                                <option>椭球面</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-right sendRight2" id="ReservoirAddRight">
+                    <div class="add-block">
+                        <div class="ReservoirAddDivRight">
+                            <span class="ReservoirAddDivRightSpan">流域面积</span>
+                            <input type="text" class="form-control add-input" value="" id="rriver_area">
+                        </div>
+                        <div class="ReservoirAddDivRight">
+                            <span class="ReservoirAddDivRightSpan">平均流量</span>
+                            <input type="text" class="form-control add-input" value="" id="rflow">
+                        </div>
+                        <div class="ReservoirAddDivRight">
+                            <span class="ReservoirAddDivRightSpan">最大洪量</span>
+                            <input type="text" class="form-control add-input" value="" id="rMaxFloodFlow">
+                        </div>
+                        <div class="ReservoirAddDivRight">
+                            <span class="ReservoirAddDivRightSpan">最大泄量</span>
+                            <input type="text" class="form-control add-input" value="" id="rmaxFloodVentD">
+                        </div>
+                        <div class="ReservoirAddDivRight">
+                            <span class="ReservoirAddDivRightSpan">调节特性</span>
+                            <input type="text" class="form-control add-input" value="" id="rreservior_adjust">
+                        </div>
+                        <div class="ReservoirAddDivRight">
+                            <span class="ReservoirAddDivRightSpan">洪水标准</span>
+                            <input type="text" class="form-control add-input" value="" id="rVFloodStandard">
+                        </div>
+                        <div class="ReservoirAddDivRight">
+                            <span class="ReservoirAddDivRightSpan">洪水位</span>
+                            <input type="text" class="form-control add-input" value="" id="rFloodCapacity">
+                        </div>
+                        <div class="ReservoirAddDivRight">
+                            <span class="ReservoirAddDivRightSpan">蓄水位</span>
+                            <input type="text" class="form-control add-input" value="" id="rDefineCapacity">
+                        </div>
+                        <div class="ReservoirAddDivRight">
+                            <span class="ReservoirAddDivRightSpan">死水位</span>
+                            <input type="text" class="form-control add-input" value="" id="rDeadCapacity">
+                        </div>
+                        <div class="ReservoirAddDivRight">
+                            <span class="ReservoirAddDivRightSpan">总库容</span>
+                            <input type="text" class="form-control add-input" value="" id="rTotalCapacity">
+                        </div>
+                    </div>
+                </div>
+                <div class="send-button">
+                    <button type="submit" class="btn btn-primary" id="reservoiradd">新增水库</button>
+                </div>
+            </div>
+        </div>
+        <!-- 水库管理 -->
+        <div class="panel panel-primary" id="reservoir-manage">
+            <div class="panel-heading">
+                <span>水库管理</span>
+            </div>
+            <div class="taskHeadBlock">
+                <div class="check-search-box">
+                    <span>水库名称</span><input type="text" class="form-control" id="srname">
+                    <span>所在城市</span><input type="text" class="form-control" id="srcity">
+                    <span>所在河流</span><input type="text" class="form-control" id="srriver">
+                    <br/>
+                    <span>水库类型</span>
+                    <select class="form-control" id="srtype">
+                        <option>不限</option>
+                        <option>大型水库</option>
+                        <option>中型水库</option>
+                        <option>小型水库</option>
+                    </select>
+                    <span>高程系统</span>
+                    <select class="form-control" id="srelevation">
+                        <option>不限</option>
+                        <option>大地水准面</option>
+                        <option>似大地水准面</option>
+                        <option>椭球面</option>
+                    </select>
+                    <!--<div class="optionBlock">-->
+                        <button class="btn btn-primary" id="optionBlockBtn">水库搜索</button>
+                    <!--</div>-->
+                </div>
+            </div>
+            <div class="record-check">
+                <table class="table table-striped">
+                    <thead class="record-check-thead">
+                    <tr>
+                        <th>水库编号</th>
+                        <th>水库名称</th>
+                        <th>所在城市</th>
+                        <th>所在河流</th>
+                        <th>水库类型</th>
+                        <th>高程系统</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="showReservoir">
+
+                    </tbody>
+                    <!--<tr>-->
+                    <!--<td>002</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>泸州</td>-->
+                    <!--<td>沱江</td>-->
+                    <!--<td>大型水库</td>-->
+                    <!--<td>似水平水库</td>-->
+                    <!--<td><button onclick="ReservoirHeadInfo()">详情</button></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>002</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>泸州</td>-->
+                    <!--<td>沱江</td>-->
+                    <!--<td>大型水库</td>-->
+                    <!--<td>似水平水库</td>-->
+                    <!--<td><button onclick="ReservoirHeadInfo()">详情</button></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>002</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>泸州</td>-->
+                    <!--<td>沱江</td>-->
+                    <!--<td>大型水库</td>-->
+                    <!--<td>似水平水库</td>-->
+                    <!--<td><button onclick="ReservoirHeadInfo()">详情</button></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>002</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>泸州</td>-->
+                    <!--<td>沱江</td>-->
+                    <!--<td>大型水库</td>-->
+                    <!--<td>似水平水库</td>-->
+                    <!--<td><button onclick="ReservoirHeadInfo()">详情</button></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>002</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>泸州</td>-->
+                    <!--<td>沱江</td>-->
+                    <!--<td>大型水库</td>-->
+                    <!--<td>似水平水库</td>-->
+                    <!--<td><button onclick="ReservoirHeadInfo()">详情</button></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>002</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>泸州</td>-->
+                    <!--<td>沱江</td>-->
+                    <!--<td>大型水库</td>-->
+                    <!--<td>似水平水库</td>-->
+                    <!--<td><button onclick="ReservoirHeadInfo()">详情</button></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>002</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>泸州</td>-->
+                    <!--<td>沱江</td>-->
+                    <!--<td>大型水库</td>-->
+                    <!--<td>似水平水库</td>-->
+                    <!--<td><button>详情</button></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>002</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>泸州</td>-->
+                    <!--<td>沱江</td>-->
+                    <!--<td>大型水库</td>-->
+                    <!--<td>似水平水库</td>-->
+                    <!--<td><button>详情</button></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>002</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>泸州</td>-->
+                    <!--<td>沱江</td>-->
+                    <!--<td>大型水库</td>-->
+                    <!--<td>似水平水库</td>-->
+                    <!--<td><button>详情</button></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>002</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>泸州</td>-->
+                    <!--<td>沱江</td>-->
+                    <!--<td>大型水库</td>-->
+                    <!--<td>似水平水库</td>-->
+                    <!--<td><button>详情</button></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>002</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>泸州</td>-->
+                    <!--<td>沱江</td>-->
+                    <!--<td>大型水库</td>-->
+                    <!--<td>似水平水库</td>-->
+                    <!--<td><button>详情</button></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>002</td>-->
+                    <!--<td>张坝水库</td>-->
+                    <!--<td>泸州</td>-->
+                    <!--<td>沱江</td>-->
+                    <!--<td>大型水库</td>-->
+                    <!--<td>似水平水库</td>-->
+                    <!--<td><button>详情</button></td>-->
+                    <!--</tr>-->
+                </table>
+            </div>
+            <div class="bottom-pagination-div">
+                <nav class="bottom-pagination-nav">
+                    <ul class="pagination">
+                        <!--<li><a href="javascript:void(0)">上一页</a></li>-->
+                        <!--<li class="active"><a href="javascript:void(0)">1</a></li>-->
+                        <!--<li><a href="javascript:void(0)">2</a></li>-->
+                        <!--<li><a href="javascript:void(0)">3</a></li>-->
+                        <!--<li><a href="javascript:void(0)">4</a></li>-->
+                        <!--<li><a href="javascript:void(0)">下一页</a></li>-->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- 人员管理 -->
+        <div class="panel panel-primary" id="people-manage">
+            <div class="panel-heading">
+                <span>人员管理</span>
+            </div>
+            <div class="panel-body">
+                <div class="panel-left" id="people-add">
+                    <div class="people-add-heading">
+                        <sapn class="heading">人员添加</sapn>
+                    </div>
+                    <div class="people-add-block">
+                        <div>
+                            <span class="add-font">人&nbsp;&nbsp;员&nbsp;&nbsp;&nbsp;&nbsp;类&nbsp;&nbsp;型</span>
+                            <select name="people-type" id="people-type" class="form-control add-input"
+                                    onchange="selectPeopleType(this.parentNode)">
+                                <option value="0">请选择</option>
+                                <option value="1">巡查者</option>
+                                <option value="2">管理员</option>
+                                <option value="3">观察者</option>
+                            </select>
+                        </div>
+                        <div id="admin-add">
+                            <form enctype="multipart/form-data" method="post" action="/pic_upload" id="admin_head">
+                                <!--<input type="hidden" name="type" value="管理员" >-->
+                                <img src="img/headupload.png" alt="" onclick="uploadAdminAvatar()">
+                                <input type="file" id="admin_img" name="img" style="display: none">
+                            </form>
+                            <form method="post" action="/admin_upload">
+                                <!--<div>-->
+                                <!--<span class="add-font">管理员&nbsp;&nbsp;&nbsp;&nbsp;编号</span>-->
+                                <input type="hidden" id="admin_path" name="admin_path">
+                                <!--<input type="number" class="form-control add-input" id="admin_num" name="admin_num">-->
+                                <!--</div>-->
+                                <div>
+                                    <span class="add-font">管理员&nbsp;&nbsp;&nbsp;&nbsp;账号</span>
+                                    <input type="text" class="form-control add-input" id="admin_account"
+                                           name="admin_account">
+                                </div>
+                                <div>
+                                    <span class="add-font">管理员&nbsp;&nbsp;&nbsp;&nbsp;密码</span>
+                                    <input type="password" class="form-control add-input" id="admin_password"
+                                           name="admin_password">
+                                </div>
+                                <div>
+                                    <span class="add-font">管理员&nbsp;&nbsp;&nbsp;&nbsp;姓名</span>
+                                    <input type="text" class="form-control add-input" id="admin_name"
+                                           name="admin_name">
+                                </div>
+                                <div>
+                                    <span class="add-font">管理员&nbsp;&nbsp;&nbsp;&nbsp;电话</span>
+                                    <input type="tel" class="form-control add-input" id="admin_phone"
+                                           name="admin_phone">
+                                </div>
+                                <div>
+                                    <span class="add-font">管理员身份证</span>
+                                    <input type="text" class="form-control add-input" id="admin_ID" name="admin_ID">
+                                </div>
+                                <div class="admin_add_button">
+                                    <button type="submit" id="admin_btn" class="btn btn-primary">确认添加</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="watcher-add">
+                            <form method="post" action="/pic_upload" enctype="multipart/form-data"
+                                  id="watcher_head">
+                                <div>
+                                    <img src="img/headupload.png" alt="" onclick="uploadWatcherAvatar()">
+                                    <input type="file" style="display:none" id="watcher_img" name="img">
+                                </div>
+                            </form>
+                            <form method="post" action="/watcher_upload">
+                                <!--<div>-->
+                                <!--<span class="add-font">观察员&nbsp;&nbsp;&nbsp;&nbsp;编号</span>-->
+                                <!--<input type="number" class="form-control add-input" id="watcher_num">-->
+                                <!--</div>-->
+                                <input type="hidden" id="watcher_path" name="watcher_path">
+
+                                <div>
+                                    <span class="add-font">观察员&nbsp;&nbsp;&nbsp;&nbsp;账号</span>
+                                    <input type="text" class="form-control add-input" id="watcher_account"
+                                           name="watcher_account">
+                                </div>
+                                <div>
+                                    <span class="add-font">观察员&nbsp;&nbsp;&nbsp;&nbsp;密码</span>
+                                    <input type="password" class="form-control add-input" id="watcher_password"
+                                           name="watcher_password">
+                                </div>
+                                <div>
+                                    <span class="add-font">观察员&nbsp;&nbsp;&nbsp;&nbsp;姓名</span>
+                                    <input type="text" class="form-control add-input" id="watcher_name"
+                                           name="watcher_name">
+                                </div>
+                                <div>
+                                    <span class="add-font">观察员&nbsp;&nbsp;&nbsp;&nbsp;电话</span>
+                                    <input type="tel" class="form-control add-input" id="watcher_phone"
+                                           name="watcher_phone">
+                                </div>
+                                <div>
+                                    <span class="add-font">观察员身份证</span>
+                                    <input type="text" class="form-control add-input" id="watcher_ID"
+                                           name="watcher_ID">
+                                </div>
+                                <div class="watcher_add_button">
+                                    <button type="submit" class="btn btn-primary" id="watcher_btn">确认添加</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="inspector-add">
+                            <form enctype="multipart/form-data" method="post" action="/pic_upload"
+                                  id="checker_head">
+                                <div>
+                                    <img src="img/headupload.png" alt="" onclick="uploadInspectorAvatar()">
+                                    <input type="file" id="inspector_img" name="img" style="display:none">
+                                </div>
+                            </form>
+                            <!--<div>-->
+                            <!--<span class="add-font">巡查者&nbsp;&nbsp;&nbsp;&nbsp;编号</span>-->
+                            <!--<input type="number" class="form-control add-input" id="checker_num">-->
+                            <!--</div>-->
+                            <form method="post" action="/checker_upload">
+                                <input type="hidden" id="checker_path" name="checker_path">
+
+                                <div>
+                                    <span class="add-font">巡查者&nbsp;&nbsp;&nbsp;&nbsp;姓名</span>
+                                    <input type="text" class="form-control add-input" id="checker_name"
+                                           name="checker_name">
+                                </div>
+                                <div>
+                                    <span class="add-font">巡查者&nbsp;&nbsp;&nbsp;&nbsp;设备</span>
+                                    <input type="text" class="form-control add-input" id="checker_device"
+                                           name="checker_device">
+                                </div>
+                                <div>
+                                    <span class="add-font">巡查者&nbsp;&nbsp;&nbsp;&nbsp;电话</span>
+                                    <input type="tel" class="form-control add-input" id="checker_phone"
+                                           name="checker_phone">
+                                </div>
+                                <div>
+                                    <span class="add-font">巡查者身份证</span>
+                                    <input type="text" class="form-control add-input" id="checker_ID"
+                                           name="checker_ID">
+                                </div>
+                                <div>
+                                    <span class="add-font">巡查者所在地</span>
+                                    <input type="text" class="form-control add-input" id="checker_location"
+                                           name="checker_location">
+                                </div>
+                                <div>
+                                    <span class="add-font">所任&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;职位</span>
+                                    <select class="form-control add-input" name="work">
+                                        <option>请选择所任职位</option>
+                                        <option value="checker">检查者</option>
+                                        <option value="principal">负责人</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <span class="add-font">负责&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;水库</span>
+                                    <select id="reservoirchecker" class="form-control add-input"
+                                            name="reservoir"></select>
+                                </div>
+                                <div class="inspector_add_button">
+                                    <button type="submit" id="checker_btn" class="btn btn-primary">确认添加</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- 人员删除 -->
+                <div class="panel-right" id="people-delete">
+                    <div class="people-delete-heading">
+                        <sapn class="heading">人员删除</sapn>
+                    </div>
+                    <div class="delete-block">
+                        <div class="delete-seek">
+                            <input type="text" class="form-control block-delete-input" placeholder="请输入人物类型"
+                                   id="seek-input1">
+                            <input type="text" class="form-control block-delete-input" placeholder="请输入人物姓名"
+                                   id="seek-input2">
+                            <button class="btn btn-primary block-delete-btn" type="button" id="people-seekbtn">搜索
+                            </button>
+                        </div>
+                        <div class="seek-result">
+                            <table class="table person-delete-table" id="delete-seek-table">
+                                <thead class="record-check-thead">
+                                <tr>
+                                    <th>人物编号</th>
+                                    <th>人物类型</th>
+                                    <th>人物姓名</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody id="worker">
+                                <!--<tr>-->
+                                <!--<td>1</td>-->
+                                <!--<td>管理员</td>-->
+                                <!--<td>张三</td>-->
+                                <!--<td>-->
+                                <!--<button class="btn btn-primary" onclick="showAdminInfo()">详情</button>-->
+                                <!--<button class="btn btn-primary" onclick="deletePerson(this.parentNode.parentNode)">删除</button>-->
+                                <!--</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                <!--<td>2</td>-->
+                                <!--<td>巡查者</td>-->
+                                <!--<td>李四</td>-->
+                                <!--<td>-->
+                                <!--<button class="btn btn-primary" onclick="showInspectorInfo()">详情</button>-->
+                                <!--<button class="btn btn-primary" onclick="deletePerson(this.parentNode.parentNode)">删除</button>-->
+                                <!--</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                <!--<td>3</td>-->
+                                <!--<td>观察员</td>-->
+                                <!--<td>王五</td>-->
+                                <!--<td>-->
+                                <!--<button class="btn btn-primary" onclick="showWatcherInfo()">详情</button>-->
+                                <!--<button class="btn btn-primary" onclick="deletePerson(this.parentNode.parentNode)">删除</button>-->
+                                <!--</td>-->
+                                <!--</tr>-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 设备管理 -->
+        <div class="panel panel-primary" id="device-manage">
+            <div class="panel-heading">
+                <span>设备管理</span>
+            </div>
+            <div class="panel-body">
+                <div class="panel-left" id="device_add">
+                    <div class="device_add_heading">
+                        <sapn class="heading">设备变更</sapn>
+                    </div>
+                    <div class="add-block">
+                        <div>
+                            <span class="add-font">巡查者姓名</span>
+                            <!--<input type="number" value="1" class="form-control add-input" id="device_checker_num">-->
+                            <!-- <div class="alert alert-danger" role="alert">请输入规范的巡查者编号</div> -->
+                            <select class="form-control add-input" id="cNamed">
+                                <option>请选择巡查员</option>
+                            </select>
+                        </div>
+                        <div>
+                            <span class="add-font">巡查者设备</span>
+                            <input type="text" class="form-control add-input" id="device_checker_device">
+                        </div>
+                        <div>
+                            <span class="add-font">巡查者电话</span>
+                            <input type="text" class="form-control add-input" id="device_checker_number">
+                        </div>
+                        <div>
+                            <span class="add-font">软&nbsp;件&nbsp;版&nbsp;本</span>
+                            <input type="number" class="form-control add-input" id="device_phone_version">
+                        </div>
+                        <!--<div>-->
+                        <!--<span class="add-font">登&nbsp;记&nbsp;时&nbsp;间</span>-->
+                        <!--<input type="date" class="form-control add-input" id="device-register-time">-->
+                        <!--</div>-->
+                        <!--<div>-->
+                        <!--<span class="add-font">是&nbsp;否&nbsp;停&nbsp;用</span>-->
+                        <!--<select name="" class="form-control add-input" id="device-disabled">-->
+                        <!--<option value="0">不限</option>-->
+                        <!--<option value="1">未停用</option>-->
+                        <!--<option value="2">已停用</option>-->
+                        <!--</select>-->
+                        <!--</div>-->
+                    </div>
+                    <div class="add_button">
+                        <button type="submit" class="btn btn-primary" onclick="addDeviceClicked()">确认添加</button>
+                    </div>
+                </div>
+                <!-- 设备变更 -->
+                <div class="panel-right" id="device_delete">
+                    <div class="device_delete_heading">
+                        <sapn class="heading">设备变更</sapn>
+                    </div>
+                    <div class="delete-block">
+                        <div class="delete-seek">
+                            <input type="text" class="form-control block-delete-input" id="deviceSearchInput"/>
+                            <button class="btn btn-primary block-delete-btn" type="button" id="devicesearch">搜索
+                            </button>
+                        </div>
+                        <div class="seek-result">
+                            <table class="table" id="devicechange">
+                                <thead class="record-check-thead">
+                                <tr>
+                                    <th style="padding-left:40px;padding-right:40px;">设备编号</th>
+                                    <th style="padding-left:40px;padding-right:40px;">绑定人</th>
+                                    <th style="padding-left:40px;padding-right:40px;">是否停用</th>
+                                </tr>
+                                </thead>
+                                <tbody id="unused">
+                                <!--<tr>-->
+                                <!--<td>1</td>-->
+                                <!--<td>张三</td>-->
+                                <!--<td>-->
+                                <!--<button class="btn btn-primary" onclick="deviceAble(this.parentNode.parentNode)">-->
+                                <!--停用-->
+                                <!--</button>-->
+                                <!--</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                <!--<td>2</td>-->
+                                <!--<td>李四</td>-->
+                                <!--<td class="deviceAble">已停用</td>-->
+                                <!--<td>-->
+                                <!--<button class="btn btn-primary" onclick="deviceAble(this.parentNode.parentNode)">-->
+                                <!--停用-->
+                                <!--</button>-->
+                                <!--<button class="btn btn-primary" onclick="deviceDisable(this.parentNode.parentNode)">-->
+                                <!--启用-->
+                                <!--</button>-->
+                                <!--</td>-->
+                                <!--</tr>-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 日志管理 -->
+        <div class="panel panel-primary" id="log-manage">
+            <div class="panel-heading">
+                <span>日志管理</span>
+            </div>
+            <div class="taskHeadBlock">
+                <div class="check-search-box">
+                    <span>登入人</span>
+                    <!--<input type="text" class="form-control" id="log-user">-->
+                    <select class="form-control" id="log-user">
+                        <option>请选择检查人员</option>
+                    </select>
+                    <span>登入IP</span><input type="text" class="form-control" id="log-ip">
+                    <span>登入时间</span><input type="datetime" class="form-control" id="log-time">
+                    <button class="btn btn-primary" id="logsearch">搜索</button>
+                </div>
+            </div>
+            <div class="record-check">
+                <table class="table table-striped send-table">
+                    <thead class="record-check-thead">
+                    <tr>
+                        <th>编号</th>
+                        <th>登入人</th>
+                        <th>登入IP</th>
+                        <th>登入时间</th>
+                    </tr>
+                    </thead>
+                    <tbody id="log-table-tbody">
+                    <!--<tr>-->
+                        <!--<td>张三</td>-->
+                        <!--<td>192.153.264.25</td>-->
+                        <!--<td>2016-3-5 08:20:03</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td>张三</td>-->
+                        <!--<td>192.153.264.25</td>-->
+                        <!--<td>2016-3-5 08:20:03</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td>张三</td>-->
+                        <!--<td>192.153.264.25</td>-->
+                        <!--<td>2016-3-5 08:20:03</td>-->
+                    <!--</tr>-->
+                    </tbody>
+                </table>
+            </div>
+            <div class="bottom-pagination-div">
+                <nav class="bottom-pagination-nav">
+                    <ul class="pagination">
+                        <!--<li><a href="javascript:void(0)">上一页</a></li>-->
+                        <!--<li class="active"><a href="javascript:void(0)">1</a></li>-->
+                        <!--<li><a href="javascript:void(0)">2</a></li>-->
+                        <!--<li><a href="javascript:void(0)">3</a></li>-->
+                        <!--<li><a href="javascript:void(0)">4</a></li>-->
+                        <!--<li><a href="javascript:void(0)">下一页</a></li>-->
+                    </ul>
+                </nav>
+            </div>
+    </div>
+    <!-- 水库详情editModal -->
+    <div class="modal fade" id="reservoirDetailModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel"></h4>
+
+                    <div class="modal-flip">
+                        <span onclick="modalFlip1()" id="modalFlip11">基本信息</span>
+                        <span id="modalFlip12">工程信息</span>
+                        <span id="modalFlip13">巡查细节</span>
+                        <span onclick="modalFlip4($('#myModalLabel').html())" id="modalFlip14">水库台账</span>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div id="modalFlip1">
+                        <table class="table table-bordered tabelModalFlip1">
+                            <tr>
+                                <td>所在市</td>
+                                <td id="city"></td>
+                            </tr>
+                            <tr>
+                                <td>所在县</td>
+                                <td id="town"></td>
+                            </tr>
+                            <tr>
+                                <td>所在河流</td>
+                                <td id="river"></td>
+                            </tr>
+                            <tr>
+                                <td>经度</td>
+                                <td id="longitude"></td>
+                            </tr>
+                            <tr>
+                                <td>纬度</td>
+                                <td id="latitude"></td>
+                            </tr>
+                            <tr>
+                                <td>水库类型</td>
+                                <td id="type"></td>
+                            </tr>
+                            <tr>
+                                <td>工程类别</td>
+                                <td id="level"></td>
+                            </tr>
+                            <tr>
+                                <td>工程建设情况</td>
+                                <td id="situation"></td>
+                            </tr>
+                            <tr>
+                                <td>建成时间</td>
+                                <td id="build_time"></td>
+                            </tr>
+                            <tr>
+                                <td>高程系统</td>
+                                <td id="elevation"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- 工程信息 -->
+                    <div id="modalFlip2">
+                        <table class="table table-bordered tabelModalFlip2">
+                            <thead>
+                            <tr>
+                                <td id="flip2head1">名称</td>
+                                <td id="flip2head2">单位</td>
+                                <td id="flip2head3">备注</td>
+                                <td id="flip2head4">名称</td>
+                                <td id="flip2head5">单位</td>
+                                <td id="flip2head6">备注</td>
+                            </tr>
+                            </thead>
+                            <tr>
+                                <td>控制流域面积</td>
+                                <td>平方千米</td>
+                                <td id="river_area"></td>
+                                <td>多年平均流量</td>
+                                <td>立方米</td>
+                                <td id="flow"></td>
+                            </tr>
+                            <tr>
+                                <td>设计洪水位时最大洪量</td>
+                                <td>立方米/秒</td>
+                                <td id="maxFloodVentD"></td>
+                                <td>校核洪水位时最大泄量</td>
+                                <td>立方米/秒</td>
+                                <td id="maxFloodVentV"></td>
+                            </tr>
+                            <tr>
+                                <td>水库调节特性</td>
+                                <td></td>
+                                <td id="reservior_adjust"></td>
+                                <td>设计洪水标准</td>
+                                <td></td>
+                                <td id="DesignFloodStandard"></td>
+                            </tr>
+                            <tr>
+                                <td>设计洪水位</td>
+                                <td>米</td>
+                                <td id="DFloodlevel"></td>
+                                <td>校核洪水位</td>
+                                <td>米</td>
+                                <td id="VFloodlevel"></td>
+                            </tr>
+                            <tr>
+                                <td>正常蓄水位</td>
+                                <td>米</td>
+                                <td id="NormalWlevel"></td>
+                                <td>死水位</td>
+                                <td>米</td>
+                                <td id="DeadWlevel"></td>
+                            </tr>
+                            <tr>
+                                <td>正常蓄水位相应水面积</td>
+                                <td>平方千米</td>
+                                <td id="NormalWlevelArea"></td>
+                                <td>校核洪水标准</td>
+                                <td></td>
+                                <td id="VFloodStandard"></td>
+                            </tr>
+                            <tr>
+                                <td>总库容</td>
+                                <td>万立方米</td>
+                                <td id="TotalCapacity"></td>
+                                <td>调洪库容</td>
+                                <td>万立方米</td>
+                                <td id="AbjustCapacity"></td>
+                            </tr>
+                            <tr>
+                                <td>死库容</td>
+                                <td>万立方米</td>
+                                <td id="DeadCapacity"></td>
+                                <td>兴利库容</td>
+                                <td>万立方米</td>
+                                <td id="XinliCapacity"></td>
+                            </tr>
+                            <tr>
+                                <td>调节库容</td>
+                                <td>万立方米</td>
+                                <td id="AdFloodCapacity"></td>
+                                <td>汛期限制水位</td>
+                                <td>米</td>
+                                <td id="Floodwlevel"></td>
+                            </tr>
+                            <tr>
+                                <td>汛期限制水位开始日期</td>
+                                <td></td>
+                                <td id="FloodStart"></td>
+                                <td>汛期限制水位结束日期</td>
+                                <td></td>
+                                <td id="FloodEnd"></td>
+                            </tr>
+                            <tr>
+                                <td>汛期限制水位的相应库容</td>
+                                <td>万方千米</td>
+                                <td id="FloodCapacity"></td>
+                                <td>防洪高水位相应洪水标准</td>
+                                <td></td>
+                                <td id="DefineFloodStandard"></td>
+                            </tr>
+                            <tr>
+                                <td>防洪高水位</td>
+                                <td>米</td>
+                                <td id="DefineWlevel"></td>
+                                <td>防洪库容</td>
+                                <td>万立方米</td>
+                                <td id="DefineCapacity"></td>
+                            </tr>
+                            <tr>
+                                <td>历史最高水位</td>
+                                <td>米</td>
+                                <td id="HistoryMaxWlevel"></td>
+                                <td>历史最高水位发生的日期</td>
+                                <td></td>
+                                <td id="HistoryMaxWlevelTime"></td>
+                            </tr>
+                            <tr>
+                                <td>历史最大入库流量</td>
+                                <td>立方米/秒</td>
+                                <td id="HistoryMaxinFlow"></td>
+                                <td>历史最大入库流量发生日期</td>
+                                <td></td>
+                                <td id="HistoryMaxinFlowTime"></td>
+                            </tr>
+                            <tr>
+                                <td>历史最大出库流量</td>
+                                <td>立方米/秒</td>
+                                <td id="HistoryMaxoutFlow"></td>
+                                <td>历史最大出库流量发生日期</td>
+                                <td></td>
+                                <td id="HistoryMaxoutFlowTime"></td>
+                            </tr>
+                            <tr>
+                                <td>主要挡水建筑物类型</td>
+                                <td></td>
+                                <td id="BuildingType"></td>
+                                <td>主坝级别</td>
+                                <td></td>
+                                <td id="Damlevel"></td>
+                            </tr>
+                            <tr>
+                                <td>主坝坝型</td>
+                                <td></td>
+                                <td id="DamType"></td>
+                                <td>最大坝高</td>
+                                <td>秒</td>
+                                <td id="MaxDamHigh"></td>
+                            </tr>
+                            <tr>
+                                <td>坝长</td>
+                                <td>米</td>
+                                <td id="DamLength"></td>
+                                <td>坝顶宽度</td>
+                                <td>米</td>
+                                <td id="DamWidth"></td>
+                            </tr>
+                            <tr>
+                                <td>坝顶长度</td>
+                                <td>米</td>
+                                <td id="DamTopLength"></td>
+                                <td>坝顶高程</td>
+                                <td>米</td>
+                                <td id="DamTopElevation"></td>
+                            </tr>
+                            <tr>
+                                <td>坝体防渗型式</td>
+                                <td></td>
+                                <td id="DamDefineType"></td>
+                                <td>坝基地址</td>
+                                <td></td>
+                                <td id="Damlow_addr"></td>
+                            </tr>
+                            <tr>
+                                <td>坝基防渗措施</td>
+                                <td></td>
+                                <td id="DamDefine"></td>
+                                <td>泄水建筑物类型</td>
+                                <td></td>
+                                <td id="FloodBuildingType"></td>
+                            </tr>
+                            <tr>
+                                <td>建筑物级别</td>
+                                <td></td>
+                                <td id="BuildingLevel"></td>
+                                <td>正常/非常溢洪道</td>
+                                <td></td>
+                                <td id="FlowRoad"></td>
+                            </tr>
+                            <tr>
+                                <td>最大泄洪流量</td>
+                                <td>立方米/秒</td>
+                                <td id="MaxFloodFlow"></td>
+                                <td>建筑物位置</td>
+                                <td></td>
+                                <td id="BuildingLocation"></td>
+                            </tr>
+                            <tr>
+                                <td>孔数（条数）</td>
+                                <td></td>
+                                <td id="circleNum"></td>
+                                <td>孔口断面型式</td>
+                                <td></td>
+                                <td id="circleType"></td>
+                            </tr>
+                            <tr>
+                                <td>孔口净高</td>
+                                <td>米</td>
+                                <td id="circleHigh"></td>
+                                <td>孔口净宽</td>
+                                <td>米</td>
+                                <td id="circleWidth"></td>
+                            </tr>
+                            <tr>
+                                <td>孔口内径</td>
+                                <td>米</td>
+                                <td id="circleRadius"></td>
+                                <td>进口低槛高程</td>
+                                <td>米</td>
+                                <td id="EnterElevation"></td>
+                            </tr>
+                            <tr>
+                                <td>进口闸门型式</td>
+                                <td></td>
+                                <td id="EnterGateTYype"></td>
+                                <td>遥测站名称</td>
+                                <td></td>
+                                <td id="RemoteName"></td>
+                            </tr>
+                            <tr>
+                                <td>遥测站代码</td>
+                                <td></td>
+                                <td id="RemoteID"></td>
+                                <td>测验项目</td>
+                                <td></td>
+                                <td id="project"></td>
+                            </tr>
+                            <tr>
+                                <td>通信方式</td>
+                                <td></td>
+                                <td id="telType"></td>
+                                <td>工程位置图</td>
+                                <td></td>
+                                <td id="projectLoctionMap"></td>
+                            </tr>
+                            <tr>
+                                <td>枢纽平面布置图</td>
+                                <td></td>
+                                <td id="hubMap"></td>
+                                <td>主坝典型横剖面图（多个）</td>
+                                <td></td>
+                                <td id="DamProfileMap"></td>
+                            </tr>
+                            <tr>
+                                <td>泄洪建筑物纵（横）剖面图</td>
+                                <td></td>
+                                <td id="BuildingProfileMap"></td>
+                                <td>大坝典型断面安全监测仪器布置图</td>
+                                <td></td>
+                                <td id="DamSafeMap"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--&lt;!&ndash; 巡查细节 &ndash;&gt;-->
+                    <div id="modalFlip3">
+                        <table class="table table-bordered tabelModalFlip3">
+                            <thead>
+                            <tr>
+                                <td id="flip3head1">部位</td>
+                                <td id="flip3head2">巡视检查内容</td>
+                                <td id="flip3head3">检查结果</td>
+                                <td id="flip3head4">附件</td>
+                            </tr>
+                            </thead>
+                            <tr>
+                                <td class="Dam0" data-id="1">坝顶</td>
+                                <td>有无裂缝异常变形;防浪墙有无开裂、错断、倾斜、积水、沉陷等情况</td>
+                                <td id="Dam0"></td>
+                                <td>
+                                    <button onclick="showLittleItem($('.Dam0').html(),$('#myModalLabel').html(),0)">
+                                        查看小项
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="Dam1" data-id="2">迎水面坝坡</td>
+                                <td>护坡（面板）有无裂缝、剥落、滑动、隆起、塌坑、错位；止水有无变形、损坏；迎坝水面有无冒泡、变浑或漩涡等异常现象</td>
+                                <td id="Dam1"></td>
+                                <td>
+                                    <button onclick="showLittleItem($('.Dam1').html(),$('#myModalLabel').html(),1)">
+                                        查看小项
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="Dam2" data-id="3">背水面坝坡</td>
+                                <td>有无裂缝、滑动、隆起、塌陷、散浸或扩大、涌水、流土或管涌、兽洞，排水系统是否通畅</td>
+                                <td id="Dam2"></td>
+                                <td>
+                                    <button onclick="showLittleItem($('.Dam2').html(),$('#myModalLabel').html(),2)">
+                                        查看小项
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="Dam3" data-id="4">坝脚</td>
+                                <td>有无裂缝、推移、涌水、流土、缺损、塌陷、散浸等异常现象。</td>
+                                <td id="Dam3"></td>
+                                <td>
+                                    <button onclick="showLittleItem($('.Dam3').html(),$('#myModalLabel').html(),3)">
+                                        查看小项
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="Dam4" data-id="5">两岸坝肩区</td>
+                                <td>有无裂缝、变形、渗漏、错位、绕渗、溶蚀、管涌、滑坡等情况</td>
+                                <td id="Dam4"></td>
+                                <td>
+                                    <button onclick="showLittleItem($('.Dam4').html(),$('#myModalLabel').html(),4)">
+                                        查看小项
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="Dam5" data-id="6">溢洪道</td>
+                                <td>有无堵淤或其他阻水现象，侧墙、底板、伸缩缝、排水孔是否正常，消能设施有无损坏，下游泄水是否通畅，交通桥有无异常</td>
+                                <td id="Dam5"></td>
+                                <td>
+                                    <button onclick="showLittleItem($('.Dam5').html(),$('#myModalLabel').html(),5)">
+                                        查看小项
+                                    </button>
+                                </td>
+                            <tr>
+                                <td class="Dam6" data-id="7">泄洪洞</td>
+                                <td>有无堵淤，侧墙有无渗漏、裂缝，混凝土是否气蚀、磨损，排水是否顺畅</td>
+                                <td id="Dam6"></td>
+                                <td>
+                                    <button onclick="showLittleItem($('.Dam6').html(),$('#myModalLabel').html(),6)">
+                                        查看小项
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="Dam7" data-id="8">变形观测</td>
+                                <td>水平位移观测、垂直位移观测结果由测量员填写，测量结果作为附件</td>
+                                <td id="Dam7"></td>
+                                <td>
+                                    <button onclick="showLittleItem($('.Dam7').html(),$('#myModalLabel').html(),7)">
+                                        查看小项
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="Dam8" data-id="9">渗漏</td>
+                                <td>着重检查渗漏的水量及水质。渗漏水量的大小是否有变化，水质清或浊。</td>
+                                <td id="Dam8"></td>
+                                <td>
+                                    <button onclick="showLittleItem($('.Dam8').html(),$('#myModalLabel').html(),8)">
+                                        查看小项
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="Dam9" data-id="10">裂缝</td>
+                                <td>裂缝的宽度、长度、深度变化情况，变化详细结果作为附件</td>
+                                <td id="Dam9"></td>
+                                <td>
+                                    <button onclick="showLittleItem($('.Dam9').attr('data-id'),$('#myModalLabel').html(),9)">
+                                        查看小项
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>巡查结论</td>
+                                <td colspan="3" id="conclusion"></td>
+                            </tr>
+                            <tr>
+                                <td>检查人</td>
+                                <td colspan="3" id="checker"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- 水库台账 -->
+                    <div id="modalFlip4">
+                        <table class="table table-bordered tabelModalFlip4">
+                            <thead>
+                            <tr>
+                                <td>台账类别</td>
+                                <td>具体内容</td>
+                                <td>单位</td>
+                                <td>值范围</td>
+                                <td>备注</td>
+                            </tr>
+                            </thead>
+                            <tr>
+                                <td rowspan="3">工程巡查</td>
+                                <td>巡查开始时间</td>
+                                <td>日/时/分</td>
+                                <td class="start"></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>巡查结束时间</td>
+                                <td>日/时/分</td>
+                                <td class="end"></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>当天水位</td>
+                                <td>米</td>
+                                <td class="waterlevel"></td>
+                                <td>有自动水位站的不需要</td>
+                            </tr>
+                            <tr>
+                                <td>汛前检查</td>
+                                <td>汛前检查报告</td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <button onclick="showPDF1()">查看PDF</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>年度检查</td>
+                                <td>年度检查报告</td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <button onclick="showPDF2()">查看PDF</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>安全监测</td>
+                                <td>安全监测资料整编分析报告</td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <button onclick="showPDF3()">查看PDF</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 任务管理详情按钮弹窗 -->
+<div class="modal fade" id="checkRecordDetailModal1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">巡查记录详细</h4>
+            </div>
+            <div class="modal-body">
+                <div class="task-check-table-container">
+                    <table class="table table-bordered tabelModalFlip3">
+                        <thead>
+                        <tr>
+                            <td id="flip3head1">部位</td>
+                            <td id="flip3head2">巡视检查内容</td>
+                            <td id="flip3head3">检查结果</td>
+                            <td id="flip3head4">附件</td>
+                        </tr>
+                        </thead>
+                        <tr class="tCDam0">
+                            <td class="CDam0">坝顶</td>
+                            <td>有无裂缝，异常变形;防浪墙有无开裂、错断、倾斜、积水、沉陷等情况</td>
+                            <td id="CDam0"></td>
+                            <!--<td><button onclick="showlittleItem1()">查看小项</button></td>-->
+                        </tr>
+                        <tr class="tCDam1">
+                            <td class="CDam1">迎水面坝坡</td>
+                            <td>护坡（面板）有无裂缝、剥落、滑动、隆起、塌坑、错位；止水有无变形、损坏；迎坝水面有无冒泡、变浑或漩涡等异常现象</td>
+                            <td id="CDam1"></td>
+                            <!--<td><button>查看小项</button></td>-->
+                        </tr>
+                        <tr class="tCDam2">
+                            <td class="CDam2">背水面坝坡</td>
+                            <td>有无裂缝、滑动、隆起、塌陷、散浸或扩大、涌水、流土或管涌、兽洞，排水系统是否通畅</td>
+                            <td id="CDam2"></td>
+                            <!--<td><button>查看小项</button></td>-->
+                        </tr>
+                        <tr class="tCDam3">
+                            <td class="CDam3">坝脚</td>
+                            <td>有无裂缝、推移、涌水、流土、缺损、塌陷、散浸等异常现象。</td>
+                            <td id="CDam3"></td>
+                            <!--<td><button>查看小项</button></td>-->
+                        </tr>
+                        <tr class="tCDam4">
+                            <td class="CDam4">两岸坝肩区</td>
+                            <td>有无裂缝、变形、渗漏、错位、绕渗、溶蚀、管涌、滑坡等情况</td>
+                            <td id="CDam4"></td>
+                            <!--<td><button>查看小项</button></td>-->
+                        </tr>
+                        <tr class="tCDam5">
+                            <td class="CDam5">溢洪道</td>
+                            <td>有无堵淤或其他阻水现象，侧墙、底板、伸缩缝、排水孔是否正常，消能设施有无损坏，下游泄水是否通畅，交通桥有无异常</td>
+                            <td id="CDam5"></td>
+                            <!--<td><button>查看小项</button></td>-->
+                        <tr class="tCDam6">
+                            <td class="CDam6">泄洪洞</td>
+                            <td>有无堵淤，侧墙有无渗漏、裂缝，混凝土是否气蚀、磨损，排水是否顺畅</td>
+                            <td id="CDam6"></td>
+                            <!--<td><button>查看小项</button></td>-->
+                        </tr>
+                        <tr class="tCDam7">
+                            <td class="CDam7">变形观测</td>
+                            <td>水平位移观测、垂直位移观测结果由测量员填写，测量结果作为附件</td>
+                            <td id="CDam7"></td>
+                            <!--<td><button>查看小项</button></td>-->
+                        </tr>
+                        <tr class="tCDam8">
+                            <td class="CDam8">渗漏</td>
+                            <td>着重检查渗漏的水量及水质。渗漏水量的大小是否有变化，水质清或浊。</td>
+                            <td id="CDam8"></td>
+                            <!--<td><button>查看小项</button></td>-->
+                        </tr>
+                        <tr class="tCDam9">
+                            <td class="CDam9">裂缝</td>
+                            <td>裂缝的宽度、长度、深度变化情况，变化详细结果作为附件</td>
+                            <td id="CDam9"></td>
+                            <!--<td><button>查看小项</button></td>-->
+                        </tr>
+                        <!--<tr>-->
+                        <!--<td>巡查结论</td>-->
+                        <!--<td colspan="3"></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                        <!--<td>检查人</td>-->
+                        <!--<td colspan="3"></td>-->
+                        <!--</tr>-->
+                    </table>
+                </div>
+                <div class="recordReviewSubmission">
+                    <span>评审结果：</span>
+                    <select class="form-control add-input" id="normal">
+                        <option>请选择</option>
+                        <option>正常，归档</option>
+                        <option>异常，待处理</option>
+                    </select><br>
+                    <span>评审备注：</span><br>
+                    <textarea class="form-control add-input" id="callback"></textarea><br>
+                </div>
+            </div>
+            <div class="modal-footer" id="submitremark">
+                <!--<button type="button" class="btn btn-primary" data-dismiss="modal" id="agree">提交评审结果</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="peopleNewCheckInMap">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">巡查记录详细</h4>
+            </div>
+            <div class="modal-body" id="peopleNewCheckInMap-body">
+                <table class="table table-bordered tabelModalFlip3">
+                    <thead>
+                    <tr>
+                        <td id="flip3head1">部位</td>
+                        <td id="flip3head2">巡视检查内容</td>
+                        <td id="flip3head3">检查结果</td>
+                        <td id="flip3head4">附件</td>
+                    </tr>
+                    </thead>
+                    <tr class="tDam0">
+                        <td class="NDam0">坝顶</td>
+                        <td>有无裂缝，异常变形;防浪墙有无开裂、错断、倾斜、积水、沉陷等情况</td>
+                        <td id="NDam0"></td>
+                        <!--<td><button onclick="showlittleItem1()">查看小项</button></td>-->
+                    </tr>
+                    <tr class="tDam1">
+                        <td class="NDam1">迎水面坝坡</td>
+                        <td>护坡（面板）有无裂缝、剥落、滑动、隆起、塌坑、错位；止水有无变形、损坏；迎坝水面有无冒泡、变浑或漩涡等异常现象</td>
+                        <td id="NDam1"></td>
+                        <!--<td><button onclick="showlittleItem1()">查看小项</button></td>-->
+                    </tr>
+                    <tr class="tDam2">
+                        <td class="NDam2">背水面坝坡</td>
+                        <td>有无裂缝、滑动、隆起、塌陷、散浸或扩大、涌水、流土或管涌、兽洞，排水系统是否通畅</td>
+                        <td id="NDam2"></td>
+                        <!--<td><button onclick="showlittleItem1()">查看小项</button></td>-->
+                    </tr>
+                    <tr class="tDam3">
+                        <td class="NDam3">坝脚</td>
+                        <td>有无裂缝、推移、涌水、流土、缺损、塌陷、散浸等异常现象。</td>
+                        <td id="NDam3"></td>
+                        <!--<td><button onclick="showlittleItem1()">查看小项</button></td>-->
+                    </tr>
+                    <tr class="tDam4">
+                        <td class="NDam4">两岸坝肩区</td>
+                        <td>有无裂缝、变形、渗漏、错位、绕渗、溶蚀、管涌、滑坡等情况</td>
+                        <td id="NDam4"></td>
+                        <!--<td><button onclick="showlittleItem1()">查看小项</button></td>-->
+                    </tr>
+                    <tr class="tDam5">
+                        <td class="NDam5">溢洪道</td>
+                        <td>有无堵淤或其他阻水现象，侧墙、底板、伸缩缝、排水孔是否正常，消能设施有无损坏，下游泄水是否通畅，交通桥有无异常</td>
+                        <td id="NDam5"></td>
+                        <!--<td><button onclick="showlittleItem1()">查看小项</button></td>-->
+                    <tr class="tDam6">
+                        <td class="NDam6">泄洪洞</td>
+                        <td>有无堵淤，侧墙有无渗漏、裂缝，混凝土是否气蚀、磨损，排水是否顺畅</td>
+                        <td id="NDam6"></td>
+                        <!--<td><button onclick="showlittleItem1()">查看小项</button></td>-->
+                    </tr>
+                    <tr class="tDam7">
+                        <td class="NDam7">变形观测</td>
+                        <td>水平位移观测、垂直位移观测结果由测量员填写，测量结果作为附件</td>
+                        <td id="NDam7"></td>
+                        <!--<td><button onclick="showlittleItem1()">查看小项</button></td>-->
+                    </tr>
+                    <tr class="tDam8">
+                        <td class="NDam8">渗漏</td>
+                        <td>着重检查渗漏的水量及水质。渗漏水量的大小是否有变化，水质清或浊。</td>
+                        <td id="NDam8"></td>
+                        <!--<td><button onclick="showlittleItem1()">查看小项</button></td>-->
+                    </tr>
+                    <tr class="tDam9">
+                        <td class="NDam9">裂缝</td>
+                        <td>裂缝的宽度、长度、深度变化情况，变化详细结果作为附件</td>
+                        <td id="NDam9"></td>
+                        <!--<td><button onclick="showlittleItem1()">查看小项</button></td>-->
+                    </tr>
+                    <!--<tr>-->
+                    <!--<td>巡查结论</td>-->
+                    <!--<td colspan="3"></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>检查人</td>-->
+                    <!--<td colspan="3"></td>-->
+                    <!--</tr>-->
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 小项查看弹框1 -->
+<div class="modal fade" id="littleItem1Modal0">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">坝顶</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered tabelModalFlip1">
+                    <thead>
+                    <tr>
+                        <td class="check-item-head1">编号</td>
+                        <td class="check-item-head2">检查项内容</td>
+                        <td class="check-item-head3">检查结论</td>
+                        <td class="check-item-head4">巡查备注</td>
+                        <td class="check-item-head5">图片查看</td>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>1</td>
+                        <td>有无裂缝，异常变形</td>
+                        <td class="State0"></td>
+                        <td class="Command0"></td>
+                        <td class="Pbtn0">
+                            <!--<button onclick="viewPictureModal($('.Dam0').html(),$('#myModalLabel').html(),1)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>防浪墙有无开裂、错断、倾斜、积水、沉陷等情况</td>
+                        <td class="State1"></td>
+                        <td class="Command1"></td>
+                        <td class="Pbtn1">
+                            <!--<button onclick="viewPictureModal($('.Dam0').html(),$('#myModalLabel').html(),2)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 小项查看弹框2 -->
+<div class="modal fade" id="littleItem1Modal1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">迎水面坝坡</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered tabelModalFlip1">
+                    <thead>
+                    <tr>
+                        <td class="check-item-head1">编号</td>
+                        <td class="check-item-head2">检查项内容</td>
+                        <td class="check-item-head3">检查结论</td>
+                        <td class="check-item-head4">巡查备注</td>
+                        <td class="check-item-head5">图片查看</td>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>1</td>
+                        <td>护坡（面板）有无裂缝、剥落、滑动、隆起、塌坑、错位</td>
+                        <td class="State0"></td>
+                        <td class="Command0"></td>
+                        <td class="Pbtn0">
+                            <!--<button onclick="viewPictureModal($('.Dam1').html(),$('#myModalLabel').html(),1)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>止水有无变形、损坏；迎坝水面有无冒泡、变浑或漩涡等异常现象</td>
+                        <td class="State1"></td>
+                        <td class="Command1"></td>
+                        <td class="Pbtn1">
+                            <!--<button onclick="viewPictureModal($('.Dam1').html(),$('#myModalLabel').html(),2)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 小项查看弹框3 -->
+<div class="modal fade" id="littleItem1Modal2">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">背水面坝坡</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered tabelModalFlip1">
+                    <thead>
+                    <tr>
+                        <td class="check-item-head1">编号</td>
+                        <td class="check-item-head2">检查项内容</td>
+                        <td class="check-item-head3">检查结论</td>
+                        <td class="check-item-head4">巡查备注</td>
+                        <td class="check-item-head5">图片查看</td>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>1</td>
+                        <td>有无裂缝、滑动、隆起、塌陷、散浸</td>
+                        <td class="State0"></td>
+                        <td class="Command0"></td>
+                        <td class="Pbtn0">
+                            <!--<button onclick="viewPictureModal($('.Dam2').html(),$('#myModalLabel').html(),1)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>有无扩大、涌水、流土</td>
+                        <td class="State1"></td>
+                        <td class="Command1"></td>
+                        <td class="Pbtn1">
+                            <!--<button onclick="viewPictureModal($('.Dam2').html(),$('#myModalLabel').html(),2)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>有无管涌、兽洞</td>
+                        <td class="State2"></td>
+                        <td class="Command2"></td>
+                        <td class="Pbtn2">
+                            <!--<button onclick="viewPictureModal($('.Dam2').html(),$('#myModalLabel').html(),3)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>排水系统是否通畅</td>
+                        <td class="State3"></td>
+                        <td class="Command3"></td>
+                        <td class="Pbtn3">
+                            <!--<button onclick="viewPictureModal($('.Dam2').html(),$('#myModalLabel').html(),4)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 小项查看弹框4 -->
+<div class="modal fade" id="littleItem1Modal3">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">坝脚</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered tabelModalFlip1">
+                    <thead>
+                    <tr>
+                        <td class="check-item-head1">编号</td>
+                        <td class="check-item-head2">检查项内容</td>
+                        <td class="check-item-head3">检查结论</td>
+                        <td class="check-item-head4">巡查备注</td>
+                        <td class="check-item-head5">图片查看</td>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>1</td>
+                        <td>有无裂缝、推移、涌水、流土、缺损、塌陷、散浸等异常现象</td>
+                        <td class="State0"></td>
+                        <td class="Command0"></td>
+                        <td class="Pbtn0">
+                            <!--<button onclick="viewPictureModal($('.Dam3').html(),$('#myModalLabel').html(),1)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 小项查看弹框5 -->
+<div class="modal fade" id="littleItem1Modal4">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">两岸坝肩区</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered tabelModalFlip1">
+                    <thead>
+                    <tr>
+                        <td class="check-item-head1">编号</td>
+                        <td class="check-item-head2">检查项内容</td>
+                        <td class="check-item-head3">检查结论</td>
+                        <td class="check-item-head4">巡查备注</td>
+                        <td class="check-item-head5">图片查看</td>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>1</td>
+                        <td>有无裂缝、变形、渗漏、错位、绕渗、溶蚀、管涌、滑坡等情况</td>
+                        <td class="State0"></td>
+                        <td class="Command0"></td>
+                        <td class="Pbtn0">
+                            <!--<button onclick="viewPictureModal($('.Dam4').html(),$('#myModalLabel').html(),1)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 小项查看弹框6 -->
+<div class="modal fade" id="littleItem1Modal5">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">溢洪道</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered tabelModalFlip1">
+                    <thead>
+                    <tr>
+                        <td class="check-item-head1">编号</td>
+                        <td class="check-item-head2">检查项内容</td>
+                        <td class="check-item-head3">检查结论</td>
+                        <td class="check-item-head4">巡查备注</td>
+                        <td class="check-item-head5">图片查看</td>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>1</td>
+                        <td>有无堵淤或其他阻水现象，侧墙、底板、伸缩缝</td>
+                        <td class="State0"></td>
+                        <td class="Command0"></td>
+                        <td class="Pbtn0">
+                            <!--<button onclick="viewPictureModal($('.Dam5').html(),$('#myModalLabel').html(),1)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>排水孔是否正常</td>
+                        <td class="State1"></td>
+                        <td class="Command1"></td>
+                        <td class="Pbtn1">
+                            <!--<button onclick="viewPictureModal($('.Dam5').html(),$('#myModalLabel').html(),2)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>消能设施有无损坏</td>
+                        <td class="State2"></td>
+                        <td class="Command2"></td>
+                        <td class="Pbtn2">
+                            <!--<button onclick="viewPictureModal($('.Dam5').html(),$('#myModalLabel').html(),3)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>下游泄水是否通畅</td>
+                        <td class="State3"></td>
+                        <td class="Command3"></td>
+                        <td class="Pbtn3">
+                            <!--<button onclick="viewPictureModal($('.Dam5').html(),$('#myModalLabel').html(),4)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>交通桥有无异常</td>
+                        <td class="State4"></td>
+                        <td class="Command4"></td>
+                        <td class="Pbtn4">
+                            <!--<button onclick="viewPictureModal($('.Dam5').html(),$('#myModalLabel').html(),5)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 小项查看弹框7 -->
+<div class="modal fade" id="littleItem1Modal6">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">泄洪洞</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered tabelModalFlip1">
+                    <thead>
+                    <tr>
+                        <td class="check-item-head1">编号</td>
+                        <td class="check-item-head2">检查项内容</td>
+                        <td class="check-item-head3">检查结论</td>
+                        <td class="check-item-head4">巡查备注</td>
+                        <td class="check-item-head5">图片查看</td>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>1</td>
+                        <td>有无堵淤</td>
+                        <td class="State0"></td>
+                        <td class="Command0"></td>
+                        <td class="Pbtn0">
+                            <!--<button onclick="viewPictureModal($('.Dam6').html(),$('#myModalLabel').html(),1)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>侧墙有无渗漏、裂缝</td>
+                        <td class="State1"></td>
+                        <td class="Command1"></td>
+                        <td class="Pbtn1">
+                            <!--<button onclick="viewPictureModal($('.Dam6').html(),$('#myModalLabel').html(),2)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>混凝土是否气蚀、磨损</td>
+                        <td class="State2"></td>
+                        <td class="Command2"></td>
+                        <td class="Pbtn2">
+                            <!--<button onclick="viewPictureModal($('.Dam6').html(),$('#myModalLabel').html(),3)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>排水是否顺畅</td>
+                        <td class="State3"></td>
+                        <td class="Command3"></td>
+                        <td class="Pbtn3">
+                            <!--<button onclick="viewPictureModal($('.Dam6').html(),$('#myModalLabel').html(),4)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 小项查看弹框8 -->
+<div class="modal fade" id="littleItem1Modal7">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">变形观测</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered tabelModalFlip1">
+                    <thead>
+                    <tr>
+                        <td class="check-item-head1">编号</td>
+                        <td class="check-item-head2">检查项内容</td>
+                        <td class="check-item-head3">检查结论</td>
+                        <td class="check-item-head4">巡查备注</td>
+                        <td class="check-item-head5">图片查看</td>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>1</td>
+                        <td>水平位移观测</td>
+                        <td class="State0"></td>
+                        <td class="Command0"></td>
+                        <td class="Pbtn0">
+                            <!--<button onclick="viewPictureModal($('.Dam7').html(),$('#myModalLabel').html(),1)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>垂直位移观测</td>
+                        <td class="State1"></td>
+                        <td class="Command1"></td>
+                        <td class="Pbtn1">
+                            <!--<button onclick="viewPictureModal($('.Dam7').html(),$('#myModalLabel').html(),2)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 小项查看弹框9 -->
+<div class="modal fade" id="littleItem1Modal8">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">渗漏</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered tabelModalFlip1">
+                    <thead>
+                    <tr>
+                        <td class="check-item-head1">编号</td>
+                        <td class="check-item-head2">检查项内容</td>
+                        <td class="check-item-head3">检查结论</td>
+                        <td class="check-item-head4">巡查备注</td>
+                        <td class="check-item-head5">图片查看</td>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>1</td>
+                        <td>渗漏水量的大小是否有变化</td>
+                        <td class="State0"></td>
+                        <td class="Command0"></td>
+                        <td class="Pbtn0">
+                            <!--<button onclick="viewPictureModal($('.Dam8').html(),$('#myModalLabel').html(),1)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>水质清浊是否达标</td>
+                        <td class="State1"></td>
+                        <td class="Command1"></td>
+                        <td class="Pbtn1">
+                            <!--<button onclick="viewPictureModal($('.Dam8').html(),$('#myModalLabel').html(),2)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 小项查看弹框10 -->
+<div class="modal fade" id="littleItem1Modal9">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">裂缝</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered tabelModalFlip1">
+                    <thead>
+                    <tr>
+                        <td class="check-item-head1">编号</td>
+                        <td class="check-item-head2">检查项内容</td>
+                        <td class="check-item-head3">检查结论</td>
+                        <td class="check-item-head4">巡查备注</td>
+                        <td class="check-item-head5">图片查看</td>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>1</td>
+                        <td>裂缝的宽度、长度、深度变化情况</td>
+                        <td class="State0"></td>
+                        <td class="Command0"></td>
+                        <td class="Pbtn0">
+                            <!--<button onclick="viewPictureModal($('.Dam9').html(),$('#myModalLabel').html(),1)">点我看图-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 小项图片查看弹窗 -->
+<div class="modal fade" id="viewPictureModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">图片查看</h4>
+            </div>
+            <div class="modal-body">
+                <div id="carouselcontainer" class="carousel slide">
+                    <div class="carousel-inner">
+                        <!--<div class="item active">-->
+                        <!--<img src="img/4.jpg" alt="0">-->
+                        <!--</div>-->
+                        <!--<div class="item">-->
+                        <!--<img src="img/5.jpg" alt="1">-->
+                        <!--</div>-->
+                        <!--<div class="item">-->
+                        <!--<img src="img/6.jpg" alt="2">-->
+                        <!--</div>-->
+                        <!--<div class="item">-->
+                        <!--<img src="img/7.jpg" alt="3">-->
+                        <!--</div>-->
+                        <!--<a href="#carouselcontainer" class="carousel-control left" data-slide="prev">-->
+                        <!--&lsaquo;-->
+                        <!--</a>-->
+                        <!--<a href="#carouselcontainer" class="carousel-control right" data-slide="next">-->
+                        <!--&rsaquo;-->
+                        <!--</a>-->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 小项PDF查看弹窗1 -->
+<div class="modal fade" id="viewPDFModal1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">PDF查看</h4>
+            </div>
+            <div class="modal-body">
+                <div id="pdfContainer" class="pdf-container">
+                    <embed class="PDF-style" id="waterPDF" src=""></embed>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 小项PDF查看弹窗2 -->
+<div class="modal fade" id="viewPDFModal2">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">PDF查看</h4>
+            </div>
+            <div class="modal-body">
+                <div id="pdfContainer" class="pdf-container">
+                    <embed class="PDF-style" id="yearPDF" src=""></embed>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 小项PDF查看弹窗3 -->
+<div class="modal fade" id="viewPDFModal3">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">PDF查看</h4>
+            </div>
+            <div class="modal-body">
+                <div id="pdfContainer" class="pdf-container">
+                    <embed class="PDF-style" id="safePDF" src=""></embed>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 人员详情管理员弹窗 -->
+<div class="modal fade" id="adminInfoWindow">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">人物信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="personInfoPortraitContainer">
+                    <img class="img-circle portrait personInfoPortrait" id="admin" src="">
+                </div>
+                <table class="table table-bordered personInfoTable">
+                    <tr>
+                        <td>人员类型</td>
+                        <td>管理员</td>
+                    </tr>
+                    <tr>
+                        <td>姓名</td>
+                        <td id="aname"></td>
+                    </tr>
+                    <tr>
+                        <td>电话</td>
+                        <td id="aphone"></td>
+                    </tr>
+                    <tr>
+                        <td>身份证号</td>
+                        <td id="aid"></td>
+                    </tr>
+                    <tr>
+                        <td>帐号</td>
+                        <td id="aacount"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="closeAdminInfo()">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 人员详情巡查员弹窗 -->
+<div class="modal fade" id="inspectorInfoWindow">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">人物信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="personInfoPortraitContainer">
+                    <img class="img-circle portrait personInfoPortrait" id="checkerone" src="">
+                </div>
+                <table class="table table-bordered personInfoTable">
+                    <tr>
+                        <td>人员类型</td>
+                        <td>巡查员</td>
+                    </tr>
+                    <tr>
+                        <td>姓名</td>
+                        <td id="cname"></td>
+                    </tr>
+                    <tr>
+                        <td>电话</td>
+                        <td id="cphone"></td>
+                    </tr>
+                    <tr>
+                        <td>设备</td>
+                        <td id="cdevice"></td>
+                    </tr>
+                    <tr>
+                        <td>所在地</td>
+                        <td id="clocation"></td>
+                    </tr>
+                    <tr>
+                        <td>身份证</td>
+                        <td id="cid"></td>
+                    </tr>
+                    <tr>
+                        <td>软件版本</td>
+                        <td id="cversion"></td>
+                    </tr>
+                    <tr>
+                        <td>负责水库</td>
+                        <td id="creservoir"></td>
+                    </tr>
+                    <tr>
+                        <td>所任职位</td>
+                        <td id="cwork"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="closeInspectorInfo()">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 人员详情观察员弹窗 -->
+<div class="modal fade" id="watcherInfoWindow">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 calss="modal-title">人物信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="personInfoPortraitContainer">
+                    <img class="img-circle portrait personInfoPortrait" id="watcher" src="">
+                </div>
+                <table class="table table-bordered personInfoTable">
+                    <tr>
+                        <td>人员类型</td>
+                        <td>观察员</td>
+                    </tr>
+                    <tr>
+                        <td>姓名</td>
+                        <td id="wname"></td>
+                    </tr>
+                    <tr>
+                        <td>电话</td>
+                        <td id="wphone"></td>
+                    </tr>
+                    <tr>
+                        <td>身份证号</td>
+                        <td id="wid"></td>
+                    </tr>
+                    <tr>
+                        <td>账号</td>
+                        <td id="wacount"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="closeWatcherInfo()">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../js/jquery-2.2.4.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<script type="text/javascript"
+        src="http://webapi.amap.com/maps?v=1.3&key=c270793fc4b17d63b2fac1b961402398"></script>
+<script type="text/javascript" src="../js/index2.js"></script>
+<script type="text/javascript" src="../js/mqttws31.js"></script>
+</body>
+</html>

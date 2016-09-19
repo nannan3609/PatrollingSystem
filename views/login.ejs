@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <mata name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>水库巡检系统</title>
+    <script type="text/javascript" src="../js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="../js/login.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+
+<body class="login_body">
+<div class="login-block">
+        <div class="login_bolck">
+            <div class="login_title">
+                <p>水库巡检管理系统</p>
+            </div>
+            <div class="admin_tag" onclick="showAdminBlock()">
+                <span>管理员入口</span>
+            </div>
+            <div class="watcher_tag" onclick="showWatcherBlock()">
+                <span>观察员入口</span>
+            </div>
+            <form class="login-form" method="POST" action="/adminLogin">
+            <div class="admin_block" style="display:<%=alogin%>">
+                <table class="login_table">
+                    <tr>
+                        <td class="table_user">
+                            <span>管理员</span>
+                        </td>
+                        <td class="table_input">
+                            <input type="text" class="form-control" id="name" placeholder="请输入用户名" name="admin_name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table_user">
+                            <span>密码</span>
+                        </td>
+                        <td class="table_input">
+                            <input type="password" class="form-control" id="password" placeholder="请输入密码" name="admin_password">
+                        </td>
+                    </tr>
+                    <tr id="adminLoginAlert" style="display:<%=admin%>">
+                        <td colspan="2" class="alert-danger-tr">
+                            <div class="alert alert-danger" role="alert">账号或密码错误，请确认后重新输入。</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="td-btn">
+                            <button  type="submit" class="btn btn-primary admin-btn" id="aLogin">管理员登录</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+                </form>
+            <form class="login-form" method="POST" action="/watcherLogin">
+            <div class="watcher_block" style="display:<%=wlogin%>">
+                <table class="login_table">
+                    <tr>
+                        <td class="table_user">
+                            <span>观察员</span>
+                        </td>
+                        <td class="table_input">
+                            <input type="text" class="form-control" id="watcher_name" placeholder="请输入观察员账号" name="watcher_name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table_user">
+                            <span>密码</span>
+                        </td>
+                        <td class="table_input">
+                            <input type="password" class="form-control" id="watcher_password" placeholder="请输入密码" name="watcher_password">
+                        </td>
+                    </tr>
+                    <tr id="watcherLoginAlert" style="display: <%=watcher%>">
+                        <td colspan="2" class="alert-danger-tr">
+                            <div class="alert alert-danger" role="alert">账号或密码错误，请确认后重新输入。</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="td-btn">
+                            <button  type="submit" class="btn btn-primary admin-btn" id="wLogin">观察者登录</button>
+                            <!--<button type="submit" class="btn btn-primary admin-btn" id="wLogin">观察员登录</button>-->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+                </form>
+        </div>
+        <!--<button  type="submit" class="btn btn-primary" id="aLogin">管理员登录</button>-->
+        <!--<button  type="submit" class="btn btn-primary" id="wLogin">观察者登录</button>-->
+    </form>
+</div>
+</body>
+</html>

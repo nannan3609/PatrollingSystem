@@ -1,0 +1,183 @@
+/*p{*/
+/*font-size: 30px;*/
+/*text-align: center;*/
+/*}*/
+
+/*.login_title{*/
+/*margin-top: 10px;*/
+/*background-color: rgb(80,51,213);*/
+/*border-top-left-radius: 10px;*/
+/*border-top-right-radius: 10px;*/
+/*}*/
+
+/*span{*/
+/*font-size: 21px;*/
+/*float: left;*/
+/*display: inline-block;*/
+/*margin-left: 10px;*/
+/*margin-right: 10px;*/
+/*margin-bottom: 20px; */
+/*margin-top: 0px; */
+/*}*/
+
+/*.user_and_password{*/
+/*margin-top: 25px;*/
+/*}*/
+
+/*button{*/
+/*width: 145px;*/
+/*height: 40px;*/
+/*margin-left: 40px;*/
+/*margin-top: 10px;*/
+/*}*/
+
+/*.login-block input{*/
+/*width: 320px;*/
+/*margin-bottom: 20px;*/
+/**/
+/*}*/
+
+/*.login-block{*/
+/*width: 400px;*/
+/*height: 250px;*/
+/*background-color: rgb(199,209,252);*/
+/*border-radius: 10px;*/
+/*margin-left: 55%;*/
+/*margin-top: 18%;*/
+/*opacity: 0.9;*/
+/*}*/
+
+/*.login_body{*/
+/*background-image: url("../img/1.jpg"); */
+/*background-size: 100%;*/
+/*background-repeat: no-repeat;*/
+/*}*/
+p {
+    font-size: 36px;
+    text-align: center;
+    margin: 0px;
+}
+
+.login_title {
+    margin-top: 10px;
+    background-color: rgb(80, 51, 213);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.login_body {
+    background-image: url("../img/1.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+/*登录框*/
+.login_bolck {
+    width: 400px;
+    height: 250px;
+    background-color: rgb(199, 209, 252);
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-top: 20%;
+    /*opacity: 0.9;*/
+}
+
+/*管理员登入切换tag*/
+.admin_tag {
+
+}
+
+.admin_tag span {
+    width: 50%;
+    text-align: center;
+    background-color: #b7bfe5;
+    float: left;
+    display: inline-block;
+    font-size: 24px;
+}
+
+/*观察员登入切换tag*/
+.watcher_tag {
+    background-color: #8fa4ef;
+}
+
+.watcher_tag span {
+    width: 50%;
+    text-align: center;
+    background-color: #8fa4ef;
+    float: left;
+    display: inline-block;
+    font-size: 24px;
+}
+
+/*管理员登入区*/
+.admin_block {
+    background-color: #b7bfe5;
+}
+
+/*装载用户名和密码的表格*/
+.login_table {
+    padding: 46px 10px 10px 10px;
+    display: block;
+}
+
+.watcher_block {
+    background-color: #8fa4ef;
+}
+
+.login_table tr {
+    margin-bottom: 5px;
+    display: block;
+}
+
+/*表格中的输入框*/
+.table_input input {
+    height: 40px;
+}
+
+/*表格的用户名列*/
+.table_user {
+    width: 60px;
+    vertical-align: middle;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 20px
+}
+
+/*表格的输入列*/
+.table_input {
+    vertical-align: middle;
+    width: 318px;
+    margin-bottom: 10px;
+}
+
+/*观察员登入区*/
+.watcher_block {
+
+}
+
+.td-btn {
+    margin-top: 10px;
+    display: block;
+}
+
+/*管理员登录按钮*/
+.admin-btn {
+    width: 368px;
+    margin-left: 10px;
+    height: 42px;
+}
+
+.btn-container {
+
+}
+
+.alert-danger-tr {
+
+}
+
+.alert-danger {
+    margin-bottom: 0;
+    width: 368px;
+    margin-left: 10px;
+}

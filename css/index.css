@@ -1,0 +1,1002 @@
+/*头部导航条*/
+
+html,
+body {
+    /*width: 100%;*/
+    /*overflow-y: hidden;*/
+    margin: 0;
+    padding: 0;
+}
+th {
+    text-align: center;
+}
+#map_block,#check,#send,#ReservoirAdd,#reservoir-manage,#people-manage,#device-manage,#log-manage,#modalFlip2,#modalFlip3,#modalFlip4,#admin-add,#watcher-add,#inspector-add,.map_head_bar,.map_info_bottom,.map_info_right{
+    display: none;
+}
+.mynav{
+    height: 56px;
+    background-color: #053e6f;
+    color: #fff;
+}
+.mynav-title{
+    padding: 10px 0 0 40px;
+}
+.mynav-title span{
+    font-size: 28px;
+}
+.task-check-table-container {
+    overflow-y: auto;
+    height: 290px;
+}
+/*.time{*/
+    /*display:none;*/
+/*}*/
+/*.main {*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+/*}*/
+.content{
+    width: 100%;
+    position: absolute;
+    top: 56px;
+    bottom: 0;
+}
+.contentRight{
+    position: absolute;
+    left: 210px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    min-height: 611px;
+}
+.table > thead:first-child > tr:first-child > th {
+    border-top: 0;
+    text-align: center;
+}
+
+/*左任务栏*/
+.navbarLeft {
+    width: 210px;
+    top: 0;
+    bottom: 0;
+    background-color: #428bca;
+    position: absolute;
+    min-height: 611px;
+}
+
+/*左任务栏按钮*/
+.navbarLeft button {
+    width: 180px;
+    margin-left: 12px;
+    margin-top: 20px;
+}
+
+/*画布布局*/
+.panel.panel-primary {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 0;
+    border: 0;
+    background-color: #c9dbea;
+    overflow-y: auto;
+    overflow-y: hidden;
+    position: absolute;
+}
+
+.row {
+    height: 100%;
+    margin: 0 auto;
+    padding: 0;
+    margin-top: 0;
+}
+.panel {
+    margin-bottom: 0;
+}
+
+/*画布头*/
+.panel-heading {
+    height: 38px;
+    border-radius: 0;
+}
+
+/*画布体*/
+.panel-body {
+    top: 38px;
+    bottom: 0;
+    padding: 15px;
+
+}
+/*水库详情框巡查者可能溢出处理*/
+.panel-body.ReservoirInfo-body{
+    overflow-y: auto;
+}
+
+.reservoir-body {
+    padding: 0;
+}
+
+/*画布左区*/
+.panel-left {
+    float: left;
+    width: 49.5%;
+    min-width: 400px;
+    height: 540px;
+    /*display: -webkit-inline-box;*/
+    border-right: 1px solid blue;
+}
+
+.panel-left.sendLeft1, .panel-right.sendRight1 {
+    height: 480px;
+    padding: 20px;
+    margin-bottom: 20px;
+    overflow-y: auto;
+}
+
+.panel-left.sendLeft1 {
+    /*width: 516px;*/
+}
+#ReservoirAddLeft,#ReservoirAddRight{
+    padding: 0;
+}
+/*画布右区*/
+.panel-right.sendRight1 {
+    /*padding-left: 10px;*/
+}
+
+/*.panel-right.sendRight1 span {*/
+    /*font-size: 30px;*/
+/*}*/
+
+.panel-right.sendRight1 div span {
+    font-size: 20px;
+}
+
+/*画布右区*/
+.panel-right {
+    float: right;
+    width: 49.5%;
+    min-width: 400px;
+    height: 540px;
+}
+
+/*增加标题*/
+.heading {
+    padding: 5px 20px 5px 20px;
+    background-color: #428bca;
+    font-size: 20px;
+    border-radius: 3px;
+    color: #ffffff;
+}
+
+/*添加删除区*/
+.add-block {
+    margin: 20px 0px 20px 80px;
+    padding-right: 0px;
+}
+
+.delete-block {
+    margin: 30px 0px 0px 0px;
+    padding-right: 0px;
+}
+
+/*增加按钮*/
+.add_button {
+    width: 120px;
+    margin: 0 auto;
+}
+
+/*/!*删除搜索模块*!/*/
+/*.delete-seek {*/
+/*margin: 20px 0px;*/
+/*display: inline-block;*/
+/*}*/
+
+/*删除区搜索输入框*/
+.block-delete-input {
+    display: inline-block;
+    float: left;
+    width: 168px;
+    margin: 0 2px 0 2px;
+}
+
+/*删除区搜索按钮*/
+
+.block-delete-btn {
+    display: inline;
+    float: inherit;
+}
+
+/*删除区搜索结果*/
+.seek-result {
+    width: 400px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+/*添加输入样式*/
+.add-input {
+    display: inline;
+    height: 30px;
+    width: 200px;
+    margin-top: 3px;
+}
+
+/*输入项字体*/
+.add-font {
+    font-size: 15px;
+}
+
+/*地图页面*/
+#map_container {
+    height: 99.5%;
+    display: block;
+}
+
+.map_info_bottom_head_img {
+    width: 80px;
+    height:80px;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: -40px;
+    border-radius: 50%;
+    position: relative;
+    z-index: 304;
+}
+
+#map_block .panel-body {
+    padding: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    overflow-y: hidden;
+}
+
+/*巡查审阅搜索*/
+.form-control#check-input {
+    margin-top: 10px;
+    margin-left: 750px;
+    width: 200px;
+    float: right;
+    display: inline-block;
+}
+
+.btn.btn-primary#seek-button {
+    float: right;
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+/*下发任务编号*/
+.send-num {
+    margin-top: 0;
+}
+
+/*下发表单间距设置*/
+.send-Section, .send-date, .send-reservoir, .send-people, .send-remark {
+    margin-top: 20px;
+}
+
+#detail {
+    width: 270px;
+    height: 100px;
+}
+
+/*下发按钮*/
+.send-button button {
+    margin: 0 auto;
+    width: 200px;
+    display: block;
+}
+
+/*巡查审阅搜索块*/
+.check-search-box {
+    display: inline-block;
+    padding: 5px 0 2px 0;
+    margin: 5px 0 2px 10px;
+}
+
+/*巡查审阅搜索输入框*/
+.check-search-box input {
+    width: 130px;
+    height: 30px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    display: inline;
+}
+
+/*巡查审阅搜索选择框*/
+.check-search-box select {
+    width: 130px;
+    height: 30px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    display: inline;
+}
+
+/*巡查审阅搜索按钮*/
+.check-search-box button {
+    width: 120px;
+    height: 30px;
+    margin-right: 50px;
+    float: right;
+}
+
+/*巡查审阅记录块*/
+/*.record-check {*/
+    /*padding: 10px 10px 0 10px;*/
+    /*margin: 10px 10px 0 10px;*/
+    /*border-radius: 5px;*/
+    /*height: 434px;*/
+/*}*/
+.record-check {
+    width: 100%;
+    padding: 0 8px 0 8px;
+    margin: 0;
+}
+.send-table{
+    margin-bottom: 0;
+    border: 1px solid #c1c1e6;
+}
+.record-check table tr td {
+    line-height: 1.2;
+}
+/*巡查审阅记录表头*/
+.record-check-thead {
+    background-color: #ddd;
+}
+
+.check-search-box input {
+    width: 130px;
+    height: 30px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    display: inline;
+}
+
+/*.Flip {*/
+    /*bottom: 10px;*/
+    /*text-align: center;*/
+    /*left: 30%;*/
+    /*position: absolute;*/
+/*}*/
+.bottom-pagination-div{
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+}
+.bottom-pagination-nav{
+    text-align: center;
+}
+/*巡查审阅记录翻页*/
+
+.col-lg-2 {
+    width: 24.5%;
+    padding: 8px 0 0 8px;
+    display: inline-block;
+}
+
+.ReservoirInfo-body {
+    height: 196px;
+    width: inherit;
+}
+
+/*水库概览*/
+
+/*水库概览画布脚*/
+.panel-footer {
+    text-align: right;
+}
+
+/*水库概览画布脚移除*/
+.footer-remove {
+    cursor: pointer;
+    display: inline-block;
+}
+
+/*水库概览水库框*/
+.ReservoirInfo-body {
+    padding: 0 15px;
+}
+
+/*水库概览水库框字体*/
+.ReservoirInfo-body span {
+    font-size: 10px;
+}
+
+/*模态框头*/
+.modal-header {
+    padding: 15px 15px 0 15px;
+}
+
+/*模态框体*/
+.modal-body {
+    padding: 0;
+}
+
+/*水库详情模态框一条记录*/
+.modal-record {
+    margin-bottom: 10px;
+}
+/*图片查看轮播图*/
+#carouselcontainer img{
+    margin: 0 auto;
+    height: 500px;
+    cursor:url('../img/RotateBlue.ico'),auto;
+}
+/*水库详情模态框正常颜色状态框*/
+.modal-color-display {
+    width: 30px;
+    height: 18px;
+    float: left;
+    margin: 5px 5px 5px 15px;
+    display: inline;
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+/*水库详情模态框异常颜色状态框*/
+.warning-modal-color-display {
+    width: 30px;
+    height: 18px;
+    float: left;
+    margin: 5px 5px 5px 15px;
+    display: inline;
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+/*水库详情模态框字体*/
+.modal-words-display {
+    font-size: 20px;
+}
+
+/*水库详情模态框详情按钮*/
+.btn.btn-primary.modal-detail-btn {
+    width: 80px;
+    height: 30px;
+    display: inline;
+    margin-right: 15px;
+    float: right;
+}
+
+/*水库详情模态框细节区*/
+.modal-detail-block {
+    margin-left: 15px;
+}
+
+/*水库详情模态框一个细节*/
+.modal-reservoir-detail {
+    display: block;
+}
+
+/*水库详情模态框一个细节正常颜色标识*/
+.detail-color-display {
+    width: 20px;
+    height: 13px;
+    float: left;
+    margin: 3px 3px 3px 5px;
+    display: inline;
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+/*水库详情模态框一个细节异常颜色标识*/
+.warning-detail-color-display {
+    width: 20px;
+    height: 13px;
+    float: left;
+    margin: 3px 3px 3px 5px;
+    display: inline;
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+/*水库详情模态框一个细节文本*/
+.modal-reservoir-detail span {
+    display: inline;
+}
+
+/*水库概览模态框翻页*/
+.modal-flip {
+    margin: 10px 0 6px -5px;
+}
+
+.portrait {
+    width: 60px;
+    height: 60px;
+    float: right;
+    margin-top: -10px;
+}
+/*水库概览模态框翻页字符*/
+.modal-flip span {
+    display: inline;
+    padding: 10px 10px 8px 10px;
+    background-color: lightblue;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    margin: 10px 0 0 3px;
+    cursor: pointer;
+    color: white;
+}
+
+
+/*水库概览责任人*/
+.dutyer {
+    padding: 15px 0;
+    border-bottom: 1px solid #f2dede;
+}
+
+/*水库概览巡查者*/
+.checker {
+    padding: 15px 0;
+    border-bottom: 1px solid #f2dede;
+}
+
+/*水库概览待办问题*/
+.problemToDeal{
+margin: 8px 0;
+}
+
+.dutyer span, .checker span, .problemToDeal span {
+    font-size: 15px;
+}
+
+.modalFlip2, .modalFlip3 {
+    margin: 15px;
+}
+
+.carousel-block {
+    margin-top: 5px;
+    width: 100%;
+}
+
+.carousel-block img {
+    margin: 0 auto;
+}
+
+.carousel-block a {
+    font-size: 125px;
+}
+
+.PDF-style {
+    width: 100%;
+    height: 550px;
+}
+
+#carouselcontainer img {
+    margin: 0 auto;
+    height: 500px;
+}
+
+#carouselcontainer a {
+    font-size: 350px;
+}
+
+/*地图兴趣点弹窗*/
+.amap-info-content {
+    border-radius: 6px;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 20px 20px 10px 20px;
+    line-height: 1.4;
+    overflow: auto;
+}
+
+/*地图兴趣点弹窗头*/
+.reservoirInMap-InfoHeading {
+    margin: 0;
+    color: #FFF;
+    font-size: 18px;
+    background-color: #337ab7;
+    border-bottom: solid 1px silver;
+    line-height: 26px;
+    padding: 8px 3px 3px 6px;
+    font-weight: lighter;
+    letter-spacing: 1px;
+}
+
+/*地图兴趣点弹窗表格*/
+/*.reservoirInMap-InfoTable {*/
+    /*margin-bottom: 0;*/
+/*}*/
+
+/*地图概览信息窗*/
+.reservoirInMap-InfoTable tr td:hover {
+    color: #fff;
+    background-color: #7abbf3;
+}
+
+/*设备人员添加标题居中*/
+.device_add_heading, .device_delete_heading, .people-add-heading, .people-delete-heading {
+    width: 120px;
+    margin: 0 auto;
+}
+.person-delete-table{
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 0;
+    display: block;
+    overflow-y: auto;
+}
+/*人员添加按钮居中*/
+.admin_add_button, .watcher_add_button, .inspector_add_button {
+    width: 82px;
+    margin: 0 auto;
+    margin-top: 24px;
+}
+
+/*添加删除区*/
+.add-block {
+    width: 280px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/*人员添加左区*/
+.people-add-block {
+    width: 298px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/*按类型添加人员输入居中*/
+#admin-add div, #watcher-add div, #inspector-add div {
+    /*display: inline;*/
+}
+
+.delete-block {
+    margin: 30px 0 0 0;
+    padding-right: 0;
+}
+
+/*增加按钮*/
+.add_button {
+    width: 84px;
+    margin: 0 auto;
+}
+
+/*删除搜索模块*/
+.delete-seek {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 400px;
+    margin: 0 auto;
+    display: inherit;
+}
+
+#delete-seek-table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    height: 446px;
+    display: block;
+    overflow-y: auto;
+}
+
+#devicechange {
+    width: 100%;
+    height: 446px;
+    display: block;
+    overflow-y: auto;
+}
+
+.padding-th {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+/*删除区搜索结果*/
+.seek-result {
+    width: 400px;
+    margin: 0 auto;
+}
+
+#deviceSearchInput {
+    width: 325px;
+}
+
+/*添加输入样式*/
+.add-input {
+    display: inline;
+    height: 30px;
+    width: 200px;
+    margin-top: 3px;
+}
+
+/*输入项字体*/
+.add-font {
+    font-size: 15px;
+}
+
+#admin-add img, #watcher-add img, #inspector-add img {
+    width: 120px;
+    display: block;
+    margin: 20px 0 15px 78px;
+}
+
+/*水库概览人物头像*/
+
+.img-circle {
+    border-radius: 50%;
+}
+
+/*人员详情弹窗头像*/
+.personInfoPortrait {
+    width: 100px;
+    height: 100px;
+    margin-bottom: -20px;
+    margin-top: 10px;
+}
+
+/*人员详情弹窗头像容器*/
+.personInfoPortraitContainer {
+    width: 100px;
+    margin: 0 auto;
+}
+
+/*人员详情弹窗表*/
+.personInfoTable {
+    margin-bottom: 0;
+}
+
+/*人员详情弹窗表项*/
+.personInfoTable td {
+    width: 50%;
+}
+
+.table tr {
+    text-align: center;
+}
+
+/*新增水库输入块*/
+.ReservoirAddDiv {
+    display: block;
+    float: right;
+}
+
+.ReservoirAddDivRight {
+    display: block;
+    float: right;
+}
+
+.ReservoirAddDivRightSpan {
+    font-size: 14px;
+}
+
+
+
+.panel-right.sendRight2 {
+    height: 480px;
+    padding: 20px;
+    margin-bottom: 20px;
+    /*overflow-y: auto;*/
+}
+
+/*任务管理头部*/
+.taskHeadBlock {
+    width: inherit;
+    display: inline;
+    position: relative;
+}
+
+/*任务管理翻页布局*/
+.taskPaginationContainer {
+    margin: 0 auto;
+    display: table;
+}
+
+/*任务管理翻页布局块*/
+.paginationBlock {
+    width: inherit;
+}
+
+.pagination {
+    margin-bottom: 0;
+}
+
+.circular {
+    height: 40px;
+    border-radius: 50%;
+    width: 40px;
+    background-color: #337ab7;
+}
+
+.Triangle {
+    width: 0;
+    height: 0;
+    border-top: 20px solid #337ab7;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    margin-left: 9.5px;
+    margin-top: -6px;
+}
+
+/*地图上的头像*/
+.portrait-in-map {
+    width: 38px;
+    height: 38px;
+    margin-left: 1px;
+    margin-top: 1px;
+}
+
+.map_head_bar select, .map_head_bar input {
+    width: 25%;
+    margin: 2px 0 2px 2px;
+}
+/*.optionBlock {*/
+    /*width: 10%;*/
+    /*float: right;*/
+    /*margin: 0 10px 2px 10px;*/
+/*}*/
+
+#optionBlockBtn {
+    /*margin: 45px 10px 10px 10px;*/
+    /*float: right;*/
+   display:inline;
+}
+
+/*地图头像右侧信息区*/
+.people-info-inmap {
+    background-color: #3b74a5;
+    padding-left: 10px;
+    margin-left: 40px;
+    margin-bottom: -42px;
+    border-radius: 5px;
+    width: 180px;
+    color: white;
+}
+
+/*地图头像右侧信息区中的姓名*/
+.people-name-intable {
+    width: 60px;
+}
+
+/*地图头像右侧信息区中巡查的水库*/
+.people-state-intable {
+    width: 110px;
+}
+
+/*水库详情模态框翻页2、3*/
+#modalFlip2, #modalFlip3 {
+    height: 480px;
+    overflow-y: auto;
+}
+
+/*模态框翻页1表格*/
+.table > tbody > tr > td, .table > thead > tr > td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.tabelModalFlip1, .tabelModalFlip4, .tabelModalFlip3, .tabelModalFlip2 {
+    margin-bottom: 0;
+}
+
+/*工程信息表头宽度设置*/
+#flip2head1, #flip2head4 {
+    width: 175px;
+}
+
+#flip2head2, #flip2head5 {
+    width: 80px;
+}
+
+#flip2head3, #flip2head6 {
+    width: 188px;
+}
+
+/*模态框框翻页3表格*/
+#flip3head1 {
+    width: 110px;
+}
+
+#flip3head2 {
+    width: 200px;
+}
+
+#flip3head3 {
+    width: 55px;
+}
+
+#flip3head4 {
+    width: 72px;
+}
+
+/*检查项小项查看页面*/
+.check-item-head1 {
+    width: 63px;
+}
+
+.check-item-head2 {
+    width: 321px;
+}
+
+.check-item-head3 {
+    width: 87px;
+}
+
+.check-item-head4 {
+    width: 322px;
+}
+
+.check-item-head5 {
+    width: 94px;
+}
+
+/*巡查审阅评审提交模块*/
+.recordReviewSubmission {
+    background-color: lightblue;
+    padding: 15px;
+}
+
+.recordReviewSubmission textarea {
+    width: 862px;
+    height: 120px;
+}
+hr{
+    margin: 0;
+}
+
+.map_info_bottom {
+    background-color: #d8e3ec;
+}
+.map_left{
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+
+}
+.map_view{
+    height: 100%;
+}
+.map_info_bottom_td {
+    width: 50%;
+}
+#peopleNewCheckInMap-body{
+    max-height: 500px;
+    overflow-y: auto;
+}
+.map_info_right {
+    width: 50%;
+    float: right;
+    height: 99.5%;
+    background-color: #aac5f5;
+    overflow-y: auto;
+}
+
+.map_info_right_table {
+    display: block;
+    margin-bottom: 0;
+}
+
+.map_head_bar {
+    background-color: #869ff7;
+}
+.under_bar{
+    height: 100%;
+}
+/*.map_head_bar select,.map_head_bar input{*/
+    /*width: 152px;*/
+    /*margin: 2px 0 2px 2px;*/
+/*}*/
+/*.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover{*/
+    /*z-index: 2;*/
+    /*color: #eee;*/
+    /*background-color: #23527c;*/
+    /*border-color: #ddd;*/
+/*}*/
+.map_head_bar button{
+    float: right;
+    height: 30px;
+    margin: 2px;
+}
